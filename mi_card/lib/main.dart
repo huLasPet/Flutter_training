@@ -56,7 +56,10 @@ class W40K extends StatelessWidget {
                     AppBar(
                       title: Text(
                         imageLink["title"].toString(),
-                        style: const TextStyle(color: Colors.amber),
+                        style: const TextStyle(
+                            color: Colors.amber,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 35),
                       ),
                       backgroundColor: Colors.black,
                     ),
@@ -73,7 +76,8 @@ class W40K extends StatelessWidget {
                       child: Center(
                         child: Text(
                           imageLink["text"].toString(),
-                          style: const TextStyle(color: Colors.amber),
+                          style: const TextStyle(
+                              color: Colors.amber, fontSize: 18),
                         ),
                       ),
                     ),
