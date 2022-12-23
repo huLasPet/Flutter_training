@@ -23,6 +23,7 @@ class W40K extends StatelessWidget {
           options: CarouselOptions(
             height: MediaQuery.of(context).size.height,
             enlargeCenterPage: true,
+            viewportFraction: 1,
           ),
           items: [
             {
@@ -67,6 +68,7 @@ class W40K extends StatelessWidget {
                       child: Image.network(imageLink["link"].toString()),
                     ),
                     Container(
+                      width: MediaQuery.of(context).size.width,
                       padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: Center(
                         child: Text(
