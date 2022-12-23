@@ -4,9 +4,12 @@ import 'dart:developer';
 
 void main() {
   //Need to wrap it as a MaterialApp for the MediaQuery.of(context).size.height to work
-  runApp(MaterialApp(
+  runApp(
+    MaterialApp(
       theme: ThemeData(fontFamily: 'IM Fell Great Primer SC'),
-      home: const W40K()));
+      home: const W40K(),
+    ),
+  );
 }
 
 class W40K extends StatelessWidget {
@@ -18,29 +21,30 @@ class W40K extends StatelessWidget {
       body: SafeArea(
         child: CarouselSlider(
           options: CarouselOptions(
-              height: MediaQuery.of(context).size.height,
-              enlargeCenterPage: true),
+            height: MediaQuery.of(context).size.height,
+            enlargeCenterPage: true,
+          ),
           items: [
             {
-              "title": "Title 1",
+              "title": "Emperor of Mankind",
               "text":
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae vulputate lacus. Fusce dignissim mattis tortor, eu laoreet mauris aliquet eu. Integer aliquam in dui in mollis. Aliquam vel lectus id tortor viverra tempor eu at est. Fusce at gravida risus, vel molestie mi. Ut vel ligula non nisi posuere porta. Nulla maximus volutpat commodo. Vivamus sodales efficitur purus, in ultricies turpis condimentum id. Sed at nisl eu justo aliquet tristique sit amet quis risus. Curabitur elementum volutpat mi, non tempus felis pulvinar ut. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean nec egestas urna. Duis ornare.",
+                  'The Emperor of Mankind, often referred to by His faithful as the "God-Emperor," the "Master of Mankind," or simply "the Emperor," and who sometimes referred to Himself as "Revelation," is the immortal Perpetual and psyker who serves as the reigning monarch of the Imperium of Man, and is described by the Imperial Ecclesiarchy and the Imperial Cult as the Father, Guardian and God of Humanity.',
               "link":
-                  "https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/skittIe-chan/php3Q6y1e.jpeg"
+                  "https://static.wikia.nocookie.net/warhammer40k/images/5/50/EmperorsWisdom.jpg"
             },
             {
-              "title": "Title 2",
+              "title": "Abaddon",
               "text":
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum faucibus orci vel sodales fringilla. Ut molestie, tellus eget porta placerat, magna orci venenatis libero, quis vehicula metus lectus in libero. Suspendisse sapien sapien, rhoncus in purus id, imperdiet efficitur quam. Aenean non ligula pellentesque mi bibendum tempor imperdiet sit amet enim. Curabitur dapibus massa non nisl viverra, eget consectetur eros ultricies. Vivamus pretium eget diam eu aliquet. Sed a tempor arcu. Donec dictum ligula eget pharetra dictum. Nunc eget nisi nec nisl porttitor dapibus. Sed fringilla auctor eros, et sollicitudin urna luctus eget. In rhoncus dui vel odio sodales scelerisque.",
+                  'Abaddon, also known as Abaddon the Despoiler, once named Ezekyle Abaddon, is the Warmaster of Chaos, a Chaos Lord and the greatest Champion of Chaos Undivided in the galaxy. Abaddon is the master of the Black Legion of Chaos Space Marines and is rumoured to be the clone-progeny of the Warmaster Horus, the greatest Traitor in Imperial history, and at one time his most favoured son as the first captain of the Space Marines of the Sons of Horus Legion.',
               "link":
-                  "http://images6.fanpop.com/image/photos/34600000/random-memes-34690623-482-636.jpg"
+                  'https://static.wikia.nocookie.net/warhammer40k/images/7/76/Abaddon_the_Despoiler3.jpg'
             },
             {
-              "title": "Title 3",
+              "title": "Sanguinius",
               "text":
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pharetra arcu nec elit cursus, eget auctor nunc malesuada. Sed fringilla, tortor id consectetur tincidunt, justo elit facilisis neque, sed accumsan nisi risus nec quam. Praesent vitae blandit mauris, et tincidunt lorem. Morbi ultrices ultrices ex ac hendrerit. Sed massa diam, mattis quis quam nec, fringilla ornare odio. Aliquam tincidunt eu ipsum a ullamcorper. Aliquam eleifend mauris a volutpat dictum. Ut tristique leo diam, eget tincidunt dolor sagittis non. Phasellus ante lacus, lobortis ut faucibus eu, lobortis at mauris. Sed nisi erat, ullamcorper in aliquet vitae, faucibus sed nisi. Praesent congue.",
+                  'Sanguinius, also known as the "Great Angel" and the "Brightest One" during his lifetime, was the Primarch of the Blood Angels Legion of Space Marines. He was killed during the climax of the Horus Heresy at the Battle of Terra defending the Emperor of Mankind from the Warmaster Horus aboard his flagship, the Battle Barge Vengeful Spirit.',
               "link":
-                  "https://static.wikia.nocookie.net/cd728776-9761-44d4-ae71-85eb4c33145d/scale-to-width/755"
+                  'https://static.wikia.nocookie.net/warhammer40k/images/1/1e/Primarch_Sanguinius_Victorious.jpg'
             }
           ].map((imageLink) {
             //log(imageLink.toString());
@@ -49,22 +53,25 @@ class W40K extends StatelessWidget {
                 return Wrap(
                   children: [
                     AppBar(
-                      title: Text(imageLink["title"].toString()),
+                      title: Text(
+                        imageLink["title"].toString(),
+                        style: const TextStyle(color: Colors.amber),
+                      ),
                       backgroundColor: Colors.black,
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.5,
-                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                      margin: const EdgeInsets.symmetric(vertical: 25.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: Image.network(imageLink["link"].toString()),
                     ),
                     Container(
-                      //width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: Center(
                         child: Text(
                           imageLink["text"].toString(),
-                          style: const TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.amber),
                         ),
                       ),
                     ),
