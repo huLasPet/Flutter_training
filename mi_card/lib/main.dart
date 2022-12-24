@@ -51,7 +51,7 @@ class W40K extends StatelessWidget {
             //log(imageLink.toString());
             return Builder(
               builder: (BuildContext context) {
-                return Wrap(
+                return ListView(
                   children: [
                     AppBar(
                       title: Text(
@@ -65,9 +65,8 @@ class W40K extends StatelessWidget {
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.5,
+                      height: MediaQuery.of(context).size.height * 0.8,
                       margin: const EdgeInsets.symmetric(vertical: 25.0),
-                      padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: Image.network(imageLink["link"].toString()),
                     ),
                     Container(
