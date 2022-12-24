@@ -63,6 +63,10 @@ class W40K extends StatelessWidget {
                       ),
                       backgroundColor: Colors.black,
                     ),
+                    const Icon(
+                      Icons.ac_unit_sharp,
+                      color: Colors.amber,
+                    ),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.8,
