@@ -6,10 +6,10 @@ void main() {
   return runApp(
     MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.red.shade800,
         appBar: AppBar(
           title: const Text('Dicee'),
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.red.shade800,
         ),
         body: const DicePage(),
       ),
@@ -29,32 +29,57 @@ class _DicePageState extends State<DicePage> {
   int rightDiceNumber = 1;
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: TextButton(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                fixedSize: MaterialStateProperty.all<Size>(
+                  const Size(200, 150),
+                ),
+              ),
               onPressed: () {
                 setState(() {
                   leftDiceNumber = Random().nextInt(6) + 1;
-                });
-              },
-              child: Image.asset('images/dice$leftDiceNumber.png'),
-            ),
-          ),
-          Expanded(
-            child: TextButton(
-              onPressed: () {
-                setState(() {
                   rightDiceNumber = Random().nextInt(6) + 1;
-                  ;
                 });
               },
-              child: Image.asset('images/dice$rightDiceNumber.png'),
+              child: const Text(
+                'Roll the dice',
+                style: TextStyle(fontSize: 20),
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    leftDiceNumber = Random().nextInt(6) + 1;
+                  });
+                },
+                child: Image.asset('images/dice$leftDiceNumber.png'),
+              ),
+            ),
+            Expanded(
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    rightDiceNumber = Random().nextInt(6) + 1;
+                  });
+                },
+                child: Image.asset('images/dice$rightDiceNumber.png'),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
