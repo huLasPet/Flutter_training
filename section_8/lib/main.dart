@@ -48,9 +48,13 @@ class _OrangeState extends State<Orange> {
                 style: ElevatedButton.styleFrom(
                     elevation: 30,
                     padding: const EdgeInsets.all(10),
-                    backgroundColor: Colors.deepOrange),
-                child: Image.asset(
-                  "images/orange.png",
+                    backgroundColor: Colors.deepOrange,
+                    shape: const CircleBorder()),
+                child: const CircleAvatar(
+                  radius: 180,
+                  backgroundImage: AssetImage(
+                    "images/orange.png",
+                  ),
                 ),
               ),
             ),
@@ -64,7 +68,16 @@ class _OrangeState extends State<Orange> {
             Expanded(
               child: Text(
                 quote,
-                style: const TextStyle(fontSize: 24, color: Colors.white),
+                style: const TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                    shadows: <Shadow>[
+                      Shadow(
+                        offset: Offset(5, 5),
+                        blurRadius: 40.0,
+                        color: Color.fromARGB(255, 0, 0, 0),
+                      ),
+                    ]),
                 textAlign: TextAlign.center,
               ),
             ),
