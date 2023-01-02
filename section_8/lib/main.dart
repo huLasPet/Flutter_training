@@ -69,15 +69,16 @@ class _OrangeState extends State<Orange> {
               child: Text(
                 quote,
                 style: const TextStyle(
-                    fontSize: 24,
-                    color: Colors.white,
-                    shadows: <Shadow>[
-                      Shadow(
-                        offset: Offset(5, 5),
-                        blurRadius: 40.0,
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      ),
-                    ]),
+                  fontSize: 24,
+                  color: Colors.white,
+                  shadows: <Shadow>[
+                    Shadow(
+                      offset: Offset(5, 5),
+                      blurRadius: 40.0,
+                      color: Color.fromARGB(255, 0, 0, 0),
+                    ),
+                  ],
+                ),
                 textAlign: TextAlign.center,
               ),
             ),
