@@ -20,51 +20,71 @@ class HomePage extends StatelessWidget {
         title: const Text('Home'),
         backgroundColor: Colors.black,
       ),
-      body: Center(
-        child: ListView(
-          padding: EdgeInsets.all(0),
-          children: <Widget>[
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const MusicPlayer(
-                      videoID: 'OwG0J78ibMw',
-                      title: 'Endarkenment',
-                    ),
+      body: ListView(
+        children: <Widget>[
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const MusicPlayer(
+                    videoID: 'OwG0J78ibMw',
+                    title: 'Endarkenment',
                   ),
-                );
-              },
-              child: Ink.image(
-                width: 400,
-                height: 200,
-                image: const NetworkImage(
-                  'https://i.ytimg.com/vi/OwG0J78ibMw/maxresdefault.jpg',
                 ),
-              ), //https://i.ytimg.com/vi/mg8StjT_xiE/maxresdefault.jpg
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const MusicPlayer(
-                      videoID: 'bjR0B79Mz1w',
-                      title: 'Create Art, Though the World May Perish',
-                    ),
-                  ),
-                );
-              },
-              child: Ink.image(
-                width: 400,
-                height: 200,
-                image: const NetworkImage(
-                    'https://i.ytimg.com/vi/mg8StjT_xiE/maxresdefault.jpg'),
+              );
+            },
+            child: Ink.image(
+              fit: BoxFit.fitWidth,
+              height: 200,
+              image: const NetworkImage(
+                'https://i.ytimg.com/vi/OwG0J78ibMw/maxresdefault.jpg',
               ),
-            ), //
-          ],
-        ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'Endarkenment',
+                    style: TextStyle(color: Colors.red.shade900, fontSize: 20),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const MusicPlayer(
+                    videoID: 'bjR0B79Mz1w',
+                    title: 'Create Art, Though the World May Perish',
+                  ),
+                ),
+              );
+            },
+            child: Ink.image(
+              fit: BoxFit.fitWidth,
+              height: 200,
+              image: const NetworkImage(
+                  'https://i.ytimg.com/vi/mg8StjT_xiE/maxresdefault.jpg'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'Create Art, Though the World May Perish',
+                    style: TextStyle(color: Colors.red.shade900, fontSize: 20),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
