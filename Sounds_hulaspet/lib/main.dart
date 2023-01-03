@@ -21,7 +21,8 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.black,
       ),
       body: Center(
-        child: Column(
+        child: ListView(
+          padding: EdgeInsets.all(0),
           children: <Widget>[
             InkWell(
               onTap: () {
@@ -36,7 +37,7 @@ class HomePage extends StatelessWidget {
                 );
               },
               child: Ink.image(
-                width: 500,
+                width: 400,
                 height: 200,
                 image: const NetworkImage(
                   'https://i.ytimg.com/vi/OwG0J78ibMw/maxresdefault.jpg',
@@ -56,7 +57,7 @@ class HomePage extends StatelessWidget {
                 );
               },
               child: Ink.image(
-                //width: 300,
+                width: 400,
                 height: 200,
                 image: const NetworkImage(
                     'https://i.ytimg.com/vi/mg8StjT_xiE/maxresdefault.jpg'),
