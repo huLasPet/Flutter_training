@@ -3,92 +3,80 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 void main() {
   runApp(
-    const MaterialApp(
-      home: HomePage(),
+    MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          title: const Text('Home'),
+          backgroundColor: Colors.black,
+        ),
+        body: const HomePage(),
+      ),
     ),
   );
 }
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        title: const Text('Home'),
-        backgroundColor: Colors.black,
-      ),
-      body: ListView(
-        children: <Widget>[
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const MusicPlayer(
-                    videoID: 'OwG0J78ibMw',
-                    title: 'Endarkenment',
+    return ListView(
+      children: <Widget>[
+        for (var music in musicMap.entries)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 15),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MusicPlayer(
+                      videoID: music.value.id,
+                      title: music.key,
+                    ),
                   ),
+                );
+              },
+              child: Ink.image(
+                fit: BoxFit.fitWidth,
+                height: 200,
+                image: NetworkImage(music.value.imageUrl),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Text(
+                      music.key,
+                      style: TextStyle(
+                          color: Colors.red.shade900,
+                          fontSize: 18,
+                          backgroundColor: Colors.black87),
+                    ),
+                  ],
                 ),
-              );
-            },
-            child: Ink.image(
-              fit: BoxFit.fitWidth,
-              height: 200,
-              image: const NetworkImage(
-                'https://i.ytimg.com/vi/OwG0J78ibMw/maxresdefault.jpg',
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'Endarkenment',
-                    style: TextStyle(color: Colors.red.shade900, fontSize: 20),
-                  ),
-                ],
               ),
             ),
           ),
-          const SizedBox(
-            height: 15,
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const MusicPlayer(
-                    videoID: 'bjR0B79Mz1w',
-                    title: 'Create Art, Though the World May Perish',
-                  ),
-                ),
-              );
-            },
-            child: Ink.image(
-              fit: BoxFit.fitWidth,
-              height: 200,
-              image: const NetworkImage(
-                  'https://i.ytimg.com/vi/mg8StjT_xiE/maxresdefault.jpg'),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'Create Art, Though the World May Perish',
-                    style: TextStyle(color: Colors.red.shade900, fontSize: 20),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+      ],
     );
   }
 }
+
+class MyMusic {
+  late String id;
+  late String imageUrl;
+
+  MyMusic(this.id, this.imageUrl);
+}
+
+Map<String, dynamic> musicMap = {
+  'Endarkenment': MyMusic(
+      'OwG0J78ibMw', 'https://i.ytimg.com/vi/OwG0J78ibMw/maxresdefault.jpg'),
+  'Create Art, Though the World May Perish': MyMusic(
+      'bjR0B79Mz1w', 'https://i.ytimg.com/vi/mg8StjT_xiE/maxresdefault.jpg'),
+  ' The Age of Starlight Ends': MyMusic(
+      'KeZmnXrLs9w', 'https://i.ytimg.com/vi/KeZmnXrLs9w/maxresdefault.jpg')
+};
 
 class MusicPlayer extends StatefulWidget {
   final String videoID;
