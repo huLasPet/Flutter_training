@@ -66,16 +66,19 @@ class MyMusic {
   late String id;
   late String imageUrl;
 
-  MyMusic(this.id, this.imageUrl);
+  MyMusic({required this.id, required this.imageUrl});
 }
 
 Map<String, dynamic> musicMap = {
   'Endarkenment': MyMusic(
-      'OwG0J78ibMw', 'https://i.ytimg.com/vi/OwG0J78ibMw/maxresdefault.jpg'),
+      id: 'OwG0J78ibMw',
+      imageUrl: 'https://i.ytimg.com/vi/OwG0J78ibMw/maxresdefault.jpg'),
   'Create Art, Though the World May Perish': MyMusic(
-      'bjR0B79Mz1w', 'https://i.ytimg.com/vi/mg8StjT_xiE/maxresdefault.jpg'),
+      id: 'bjR0B79Mz1w',
+      imageUrl: 'https://i.ytimg.com/vi/mg8StjT_xiE/maxresdefault.jpg'),
   ' The Age of Starlight Ends': MyMusic(
-      'KeZmnXrLs9w', 'https://i.ytimg.com/vi/KeZmnXrLs9w/maxresdefault.jpg')
+      id: 'KeZmnXrLs9w',
+      imageUrl: 'https://i.ytimg.com/vi/KeZmnXrLs9w/maxresdefault.jpg')
 };
 
 class MusicPlayer extends StatefulWidget {
