@@ -29,7 +29,7 @@ class QuizPage extends StatefulWidget {
   final unescape = HtmlUnescape();
   String question = "Tap any of the buttons to start";
   String answer = "";
-  Color correct = Colors.blueGrey;
+  Color correctColor = Colors.blueGrey;
   late String answerOption1 = "-";
   late String answerOption2 = "-";
   late String answerOption3 = "-";
@@ -54,10 +54,10 @@ class _QuizPageState extends State<QuizPage> {
     List? temp = responseData["results"][0]["incorrect_answers"];
     answerList.addAll(temp!);
 
-    //Set buttons with possibly answers from the previous list
+    //Set buttons with possible answers from the previous list
     setState(
       () {
-        widget.correct = Colors.blueGrey;
+        widget.correctColor = Colors.blueGrey;
         widget.question =
             widget.unescape.convert(responseData["results"][0]["question"]);
         widget.answer = widget.unescape
@@ -78,7 +78,7 @@ class _QuizPageState extends State<QuizPage> {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: TextButton(
-        style: TextButton.styleFrom(backgroundColor: widget.correct),
+        style: TextButton.styleFrom(backgroundColor: widget.correctColor),
         child: Text(
           widgetNumber,
           style: const TextStyle(
@@ -89,12 +89,12 @@ class _QuizPageState extends State<QuizPage> {
         onPressed: () {
           if (widget.answer == widgetNumber || widget.answer == "") {
             setState(() {
-              widget.correct = Colors.green;
+              widget.correctColor = Colors.green;
               getQuestion(widget);
             });
           } else {
             setState(() {
-              widget.correct = Colors.red;
+              widget.correctColor = Colors.red;
               getQuestion(widget);
             });
           }
@@ -107,12 +107,14 @@ class _QuizPageState extends State<QuizPage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return ListView(
-      shrinkWrap: false,
+      reverse: true,
       children: <Widget>[
         Column(
-          mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
+          children: <Widget>[
+            SizedBox(
+              height: size.height * 0.05,
+            ),
             Text(
               widget.question,
               textAlign: TextAlign.center,
