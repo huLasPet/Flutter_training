@@ -88,21 +88,21 @@ class _QuizPageState extends State<QuizPage> {
             child: Wrap(
               children: <Widget>[
                 ListTile(
-                    leading: const Icon(Icons.arrow_circle_up_outlined),
-                    iconColor: Colors.green,
-                    title: Text(
-                      'Correct - $correctNumber',
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                    onTap: () => {}),
+                  leading: const Icon(Icons.check),
+                  iconColor: Colors.green,
+                  title: Text(
+                    'Correct - $correctNumber',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
                 ListTile(
-                    leading: const Icon(Icons.arrow_circle_down_outlined),
-                    iconColor: Colors.red,
-                    title: Text(
-                      'Incorrect - $incorrectNumber',
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                    onTap: () => {}),
+                  leading: const Icon(Icons.not_interested),
+                  iconColor: Colors.red,
+                  title: Text(
+                    'Incorrect - $incorrectNumber',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
               ],
             ),
           );
