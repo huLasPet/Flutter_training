@@ -27,15 +27,6 @@ class Quizzler extends StatelessWidget {
 
 class QuizPage extends StatefulWidget {
   final unescape = HtmlUnescape();
-  String question = "Tap any of the buttons to start";
-  String answer = "";
-  Color correctColor = Colors.blueGrey;
-  late String answerOption1 = "-";
-  late String answerOption2 = "-";
-  late String answerOption3 = "-";
-  late String answerOption4 = "-";
-  int correctNumber = 0;
-  int incorrectNumber = 0;
   QuizPage({super.key});
 
   @override
@@ -43,6 +34,16 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  String question = "Tap any of the buttons to start";
+  String answer = "";
+  Color correctColor = Colors.blueGrey;
+  String answerOption1 = "-";
+  String answerOption2 = "-";
+  String answerOption3 = "-";
+  String answerOption4 = "-";
+  int correctNumber = 0;
+  int incorrectNumber = 0;
+
   //Has to be here so it can use setState - otherwise the value of the button and what is displayed is different
   void getQuestion(widget) async {
     final rawData = await http
@@ -59,23 +60,24 @@ class _QuizPageState extends State<QuizPage> {
     //Set buttons with possible answers from the previous list
     setState(
       () {
-        widget.correctColor = Colors.blueGrey;
-        widget.question =
+        correctColor = Colors.blueGrey;
+        question =
             widget.unescape.convert(responseData["results"][0]["question"]);
-        widget.answer = widget.unescape
+        answer = widget.unescape
             .convert(responseData["results"][0]["correct_answer"]);
-        widget.answerOption1 = widget.unescape
+        answerOption1 = widget.unescape
             .convert(answerList.removeAt(Random().nextInt(answerList.length)));
-        widget.answerOption2 = widget.unescape
+        answerOption2 = widget.unescape
             .convert(answerList.removeAt(Random().nextInt(answerList.length)));
-        widget.answerOption3 = widget.unescape
+        answerOption3 = widget.unescape
             .convert(answerList.removeAt(Random().nextInt(answerList.length)));
-        widget.answerOption4 = widget.unescape
+        answerOption4 = widget.unescape
             .convert(answerList.removeAt(Random().nextInt(answerList.length)));
       },
     );
   }
 
+  //Menu that opens when clicking on Stats that show the number of correct and incorrect answers
   void settingModalBottomSheet(context) {
     showModalBottomSheet(
         context: context,
@@ -89,7 +91,7 @@ class _QuizPageState extends State<QuizPage> {
                     leading: const Icon(Icons.arrow_circle_up_outlined),
                     iconColor: Colors.green,
                     title: Text(
-                      'Correct - ${widget.correctNumber}',
+                      'Correct - $correctNumber',
                       style: const TextStyle(color: Colors.white),
                     ),
                     onTap: () => {}),
@@ -97,7 +99,7 @@ class _QuizPageState extends State<QuizPage> {
                     leading: const Icon(Icons.arrow_circle_down_outlined),
                     iconColor: Colors.red,
                     title: Text(
-                      'Incorrect - ${widget.incorrectNumber}',
+                      'Incorrect - $incorrectNumber',
                       style: const TextStyle(color: Colors.white),
                     ),
                     onTap: () => {}),
@@ -107,11 +109,12 @@ class _QuizPageState extends State<QuizPage> {
         });
   }
 
+  //Create the buttons to click when answering the question
   Padding createButton(answerNumber) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: TextButton(
-        style: TextButton.styleFrom(backgroundColor: widget.correctColor),
+        style: TextButton.styleFrom(backgroundColor: correctColor),
         child: Text(
           answerNumber,
           style: const TextStyle(
@@ -120,18 +123,18 @@ class _QuizPageState extends State<QuizPage> {
           ),
         ),
         onPressed: () {
-          if (widget.answer == answerNumber) {
+          if (answer == answerNumber) {
             setState(() {
-              widget.correctColor = Colors.green;
-              widget.correctNumber += 1;
+              correctColor = Colors.green;
+              correctNumber += 1;
               getQuestion(widget);
             });
-          } else if (widget.answer == "") {
+          } else if (answer == "") {
             getQuestion(widget);
           } else {
             setState(() {
-              widget.correctColor = Colors.red;
-              widget.incorrectNumber += 1;
+              correctColor = Colors.red;
+              incorrectNumber += 1;
               getQuestion(widget);
             });
           }
@@ -161,7 +164,7 @@ class _QuizPageState extends State<QuizPage> {
               height: size.height * 0.05,
             ),
             Text(
-              widget.question,
+              question,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 30.0,
@@ -171,10 +174,10 @@ class _QuizPageState extends State<QuizPage> {
             SizedBox(
               height: size.height * 0.20,
             ),
-            createButton(widget.answerOption1),
-            createButton(widget.answerOption2),
-            createButton(widget.answerOption3),
-            createButton(widget.answerOption4),
+            createButton(answerOption1),
+            createButton(answerOption2),
+            createButton(answerOption3),
+            createButton(answerOption4),
           ],
         ),
       ],
