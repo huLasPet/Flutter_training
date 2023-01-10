@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -35,7 +36,7 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   String question = "Tap any of the buttons to start";
-  String answer = "";
+  String answer = "Fetching questions...";
   Color correctColor = Colors.blueGrey;
   String answerOption1 = "-";
   String answerOption2 = "-";
@@ -43,36 +44,53 @@ class _QuizPageState extends State<QuizPage> {
   String answerOption4 = "-";
   int correctNumber = 0;
   int incorrectNumber = 0;
+  int questionNumber = 10;
+  dynamic responseData;
 
-  //Has to be here so it can use setState - otherwise the value of the button and what is displayed is different
+  //Get 10 new questions via the API call and create a list from them which is used to set the buttons
   void getQuestion(widget) async {
-    final rawData = await http
-        .get(Uri.parse('https://opentdb.com/api.php?amount=1&type=multiple'));
-    var responseData = json.decode(utf8.decode(rawData.bodyBytes));
+    if (questionNumber >= 10) {
+      final rawData = await http.get(
+        Uri.parse('https://opentdb.com/api.php?amount=10&type=multiple'),
+      );
+      responseData = json.decode(
+        utf8.decode(rawData.bodyBytes),
+      );
+      print("API call");
+      setState(() {
+        questionNumber = 0;
+      });
+    }
 
-    //Create a list of all answers
+    //Create the list of all answer options
     List? answerList = [
-      widget.unescape.convert(responseData["results"][0]["correct_answer"])
+      widget.unescape
+          .convert(responseData["results"][questionNumber]["correct_answer"])
     ];
-    List? temp = responseData["results"][0]["incorrect_answers"];
+    List? temp = responseData["results"][questionNumber]["incorrect_answers"];
     answerList.addAll(temp!);
 
-    //Set buttons with possible answers from the previous list
-    setState(
+    //Set buttons with possible answers from the previous list after a 2 second delay
+    Timer(
+      const Duration(seconds: 2),
       () {
-        correctColor = Colors.blueGrey;
-        question =
-            widget.unescape.convert(responseData["results"][0]["question"]);
-        answer = widget.unescape
-            .convert(responseData["results"][0]["correct_answer"]);
-        answerOption1 = widget.unescape
-            .convert(answerList.removeAt(Random().nextInt(answerList.length)));
-        answerOption2 = widget.unescape
-            .convert(answerList.removeAt(Random().nextInt(answerList.length)));
-        answerOption3 = widget.unescape
-            .convert(answerList.removeAt(Random().nextInt(answerList.length)));
-        answerOption4 = widget.unescape
-            .convert(answerList.removeAt(Random().nextInt(answerList.length)));
+        setState(
+          () {
+            correctColor = Colors.blueGrey;
+            question = widget.unescape
+                .convert(responseData["results"][questionNumber]["question"]);
+            answer = widget.unescape.convert(
+                responseData["results"][questionNumber]["correct_answer"]);
+            answerOption1 = widget.unescape.convert(
+                answerList.removeAt(Random().nextInt(answerList.length)));
+            answerOption2 = widget.unescape.convert(
+                answerList.removeAt(Random().nextInt(answerList.length)));
+            answerOption3 = widget.unescape.convert(
+                answerList.removeAt(Random().nextInt(answerList.length)));
+            answerOption4 = widget.unescape.convert(
+                answerList.removeAt(Random().nextInt(answerList.length)));
+          },
+        );
       },
     );
   }
@@ -126,15 +144,20 @@ class _QuizPageState extends State<QuizPage> {
           if (answer == answerNumber) {
             setState(() {
               correctColor = Colors.green;
+              question = 'Correct, the answer was $answer';
               correctNumber += 1;
+              questionNumber += 1;
               getQuestion(widget);
             });
-          } else if (answer == "") {
+          } else if (answer == "Fetching questions...") {
+            question = answer;
             getQuestion(widget);
           } else {
             setState(() {
               correctColor = Colors.red;
+              question = 'The correct answer was $answer';
               incorrectNumber += 1;
+              questionNumber += 1;
               getQuestion(widget);
             });
           }
@@ -184,3 +207,6 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 }
+//TODO: More than 1 question to call from the API
+//TODO: Show the correct answer
+//TODO: Difficulty and topic selector at start
