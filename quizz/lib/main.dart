@@ -12,13 +12,13 @@ class Quizzler extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.grey.shade900,
+        backgroundColor: Colors.black,
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: QuizPage(),
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            child: HomePage(),
           ),
         ),
       ),
@@ -26,22 +26,64 @@ class Quizzler extends StatelessWidget {
   }
 }
 
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: TextButton(
+        //style: TextButton.styleFrom(backgroundColor: Colors.black),
+        child: const Text(
+          'Placeholder for Easy questions',
+          style: TextStyle(
+            fontSize: 20.0,
+            color: Colors.white,
+          ),
+        ),
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => Scaffold(
+                backgroundColor: Colors.black,
+                body: SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: QuizPage(
+                      difficulty: 'easy',
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
 class QuizPage extends StatefulWidget {
   final unescape = HtmlUnescape();
-  QuizPage({super.key});
-
+  String difficulty;
+  QuizPage({super.key, required this.difficulty});
   @override
   _QuizPageState createState() => _QuizPageState();
 }
 
 class _QuizPageState extends State<QuizPage> {
-  String question = "Tap any of the buttons to start";
-  String answer = "Fetching questions...";
+  String question = 'Tap any of the buttons to start';
+  String answer = 'Fetching questions...';
   Color answerColor = Colors.blueGrey;
-  String answerOption1 = "-";
-  String answerOption2 = "-";
-  String answerOption3 = "-";
-  String answerOption4 = "-";
+  String answerOption1 = '-';
+  String answerOption2 = '-';
+  String answerOption3 = '-';
+  String answerOption4 = '-';
   int correctNumber = 0;
   int incorrectNumber = 0;
   int questionNumber = 10;
@@ -51,7 +93,9 @@ class _QuizPageState extends State<QuizPage> {
   void getQuestion(widget) async {
     if (questionNumber >= 10) {
       final rawData = await http.get(
-        Uri.parse('https://opentdb.com/api.php?amount=10&type=multiple'),
+        Uri.parse(
+          'https://opentdb.com/api.php?amount=10&type=multiple&difficulty=${widget.difficulty}',
+        ),
       );
       responseData = json.decode(
         utf8.decode(rawData.bodyBytes),
@@ -66,9 +110,9 @@ class _QuizPageState extends State<QuizPage> {
     //Create the list of all answer options
     List? answerList = [
       widget.unescape
-          .convert(responseData["results"][questionNumber]["correct_answer"])
+          .convert(responseData['results'][questionNumber]['correct_answer'])
     ];
-    List? temp = responseData["results"][questionNumber]["incorrect_answers"];
+    List? temp = responseData['results'][questionNumber]['incorrect_answers'];
     answerList.addAll(temp!);
 
     //Set buttons with possible answers from the previous list after a 2 second delay
@@ -79,9 +123,9 @@ class _QuizPageState extends State<QuizPage> {
           () {
             answerColor = Colors.blueGrey;
             question = widget.unescape
-                .convert(responseData["results"][questionNumber]["question"]);
+                .convert(responseData['results'][questionNumber]['question']);
             answer = widget.unescape.convert(
-                responseData["results"][questionNumber]["correct_answer"]);
+                responseData['results'][questionNumber]['correct_answer']);
             answerOption1 = widget.unescape.convert(
                 answerList.removeAt(Random().nextInt(answerList.length)));
             answerOption2 = widget.unescape.convert(
@@ -150,7 +194,7 @@ class _QuizPageState extends State<QuizPage> {
                 correctNumber += 1;
               },
             );
-          } else if (answer == "Fetching questions...") {
+          } else if (answer == 'Fetching questions...') {
             setState(
               () {
                 question = answer;
@@ -183,7 +227,7 @@ class _QuizPageState extends State<QuizPage> {
             settingModalBottomSheet(context);
           },
           style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.grey.shade900, elevation: 0),
+              backgroundColor: Colors.black, elevation: 0),
           child: const Text('Stats'),
         ),
         Column(
