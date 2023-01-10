@@ -37,7 +37,7 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   String question = "Tap any of the buttons to start";
   String answer = "Fetching questions...";
-  Color correctColor = Colors.blueGrey;
+  Color answerColor = Colors.blueGrey;
   String answerOption1 = "-";
   String answerOption2 = "-";
   String answerOption3 = "-";
@@ -56,10 +56,11 @@ class _QuizPageState extends State<QuizPage> {
       responseData = json.decode(
         utf8.decode(rawData.bodyBytes),
       );
-      print("API call");
-      setState(() {
-        questionNumber = 0;
-      });
+      setState(
+        () {
+          questionNumber = 0;
+        },
+      );
     }
 
     //Create the list of all answer options
@@ -76,7 +77,7 @@ class _QuizPageState extends State<QuizPage> {
       () {
         setState(
           () {
-            correctColor = Colors.blueGrey;
+            answerColor = Colors.blueGrey;
             question = widget.unescape
                 .convert(responseData["results"][questionNumber]["question"]);
             answer = widget.unescape.convert(
@@ -132,7 +133,7 @@ class _QuizPageState extends State<QuizPage> {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: TextButton(
-        style: TextButton.styleFrom(backgroundColor: correctColor),
+        style: TextButton.styleFrom(backgroundColor: answerColor),
         child: Text(
           answerNumber,
           style: const TextStyle(
@@ -142,25 +143,30 @@ class _QuizPageState extends State<QuizPage> {
         ),
         onPressed: () {
           if (answer == answerNumber) {
-            setState(() {
-              correctColor = Colors.green;
-              question = 'Correct, the answer was $answer';
-              correctNumber += 1;
-              questionNumber += 1;
-              getQuestion(widget);
-            });
+            setState(
+              () {
+                answerColor = Colors.green;
+                question = 'Correct, the answer was $answer';
+                correctNumber += 1;
+              },
+            );
           } else if (answer == "Fetching questions...") {
-            question = answer;
-            getQuestion(widget);
+            setState(
+              () {
+                question = answer;
+              },
+            );
           } else {
-            setState(() {
-              correctColor = Colors.red;
-              question = 'The correct answer was $answer';
-              incorrectNumber += 1;
-              questionNumber += 1;
-              getQuestion(widget);
-            });
+            setState(
+              () {
+                answerColor = Colors.red;
+                question = 'Wrong, the correct answer was $answer';
+                incorrectNumber += 1;
+              },
+            );
           }
+          questionNumber += 1;
+          getQuestion(widget);
         },
       ),
     );
@@ -207,6 +213,4 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 }
-//TODO: More than 1 question to call from the API
-//TODO: Show the correct answer
 //TODO: Difficulty and topic selector at start
