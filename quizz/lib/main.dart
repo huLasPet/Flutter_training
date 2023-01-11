@@ -186,7 +186,6 @@ class _QuizPageState extends State<QuizPage> {
         });
   }
 
-  //Set the button to pressed
   void answerButtonPressed() {
     setState(
       () {
