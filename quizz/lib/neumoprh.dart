@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Neumorph extends StatefulWidget {
+class Neumorph extends StatelessWidget {
   final onTap;
   late bool isButtonPressed;
   late String text;
@@ -13,22 +13,17 @@ class Neumorph extends StatefulWidget {
       required this.answerColor});
 
   @override
-  State<Neumorph> createState() => _NeumorphState();
-}
-
-class _NeumorphState extends State<Neumorph> {
-  @override
   Widget build(BuildContext context) {
     return Center(
       child: GestureDetector(
-        onTap: widget.onTap,
+        onTap: onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 100),
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
             color: Colors.grey.shade300,
             borderRadius: BorderRadius.circular(12),
-            boxShadow: widget.isButtonPressed
+            boxShadow: isButtonPressed
                 ? []
                 : [
                     BoxShadow(
@@ -49,9 +44,9 @@ class _NeumorphState extends State<Neumorph> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                widget.text,
+                text,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: widget.answerColor, fontSize: 20),
+                style: TextStyle(color: answerColor, fontSize: 20),
               ),
             ],
           ),

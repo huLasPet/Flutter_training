@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:quizz/neumoprh.dart';
+import 'package:quizz/answerbutton.dart';
 
 void main() => runApp(const Quizzler());
 
@@ -100,8 +101,11 @@ class _QuizPageState extends State<QuizPage> {
   int correctNumber = 0;
   int incorrectNumber = 0;
   int questionNumber = 10;
-  bool isAnswerButtonPressed = false;
   dynamic responseData;
+  bool isAnswer1Pressed = false;
+  bool isAnswer2Pressed = false;
+  bool isAnswer3Pressed = false;
+  bool isAnswer4Pressed = false;
 
   //Get 10 new questions via the API call and create a list from them which is used to set the buttons
   void getQuestion(widget) async {
@@ -186,15 +190,8 @@ class _QuizPageState extends State<QuizPage> {
         });
   }
 
-  void answerButtonPressed() {
-    setState(
-      () {
-        isAnswerButtonPressed = true;
-      },
-    );
-  }
-
   //Create the buttons to click when answering the question
+/*
   Padding createAnswerButton(answerNumber) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -230,6 +227,93 @@ class _QuizPageState extends State<QuizPage> {
                     question = 'Wrong, the correct answer was $answer';
                     incorrectNumber += 1;
                     isAnswerButtonPressed = false;
+                  },
+                );
+              }
+              questionNumber += 1;
+              getQuestion(widget);
+            },
+          );
+        },
+      ),
+    );
+  }
+*/
+
+  void answerButtonPressed(whichButton) {
+    setState(
+      () {
+        switch (whichButton) {
+          case 1:
+            {
+              isAnswer1Pressed = true;
+            }
+            break;
+          case 2:
+            {
+              isAnswer2Pressed = true;
+            }
+            break;
+          case 3:
+            {
+              isAnswer3Pressed = true;
+            }
+            break;
+          case 4:
+            {
+              isAnswer4Pressed = true;
+            }
+            break;
+        }
+      },
+    );
+  }
+
+  Padding createAnswerButton(
+      answerNumber, int whichButton, bool isButtonPressed) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Neumorph(
+        answerColor: answerColor,
+        isButtonPressed: isButtonPressed,
+        text: answerNumber,
+        onTap: () {
+          answerButtonPressed(whichButton);
+          Timer(
+            const Duration(milliseconds: 300),
+            () {
+              if (answer == answerNumber) {
+                setState(
+                  () {
+                    answerColor = Colors.green;
+                    question = 'Correct, the answer was $answer';
+                    correctNumber += 1;
+                    isAnswer1Pressed = false;
+                    isAnswer2Pressed = false;
+                    isAnswer3Pressed = false;
+                    isAnswer4Pressed = false;
+                  },
+                );
+              } else if (answer == 'Fetching questions...') {
+                setState(
+                  () {
+                    question = answer;
+                    isAnswer1Pressed = false;
+                    isAnswer2Pressed = false;
+                    isAnswer3Pressed = false;
+                    isAnswer4Pressed = false;
+                  },
+                );
+              } else {
+                setState(
+                  () {
+                    answerColor = Colors.red;
+                    question = 'Wrong, the correct answer was $answer';
+                    incorrectNumber += 1;
+                    isAnswer1Pressed = false;
+                    isAnswer2Pressed = false;
+                    isAnswer3Pressed = false;
+                    isAnswer4Pressed = false;
                   },
                 );
               }
@@ -283,10 +367,10 @@ class _QuizPageState extends State<QuizPage> {
             SizedBox(
               height: size.height * 0.20,
             ),
-            createAnswerButton(answerOption1),
-            createAnswerButton(answerOption2),
-            createAnswerButton(answerOption3),
-            createAnswerButton(answerOption4),
+            createAnswerButton(answerOption1, 1, isAnswer1Pressed),
+            createAnswerButton(answerOption2, 2, isAnswer2Pressed),
+            createAnswerButton(answerOption3, 3, isAnswer3Pressed),
+            createAnswerButton(answerOption4, 4, isAnswer4Pressed),
           ],
         ),
       ],
