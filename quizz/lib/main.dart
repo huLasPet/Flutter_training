@@ -105,6 +105,7 @@ class _QuizPageState extends State<QuizPage> {
   int correctNumber = 0;
   int incorrectNumber = 0;
   int questionNumber = 10;
+  int questionNumberDisplayed = 0;
   dynamic responseData;
   bool isAnswer1Pressed = false;
   bool isAnswer2Pressed = false;
@@ -245,20 +246,12 @@ class _QuizPageState extends State<QuizPage> {
                     answerColor = Colors.green;
                     question = 'Correct, the answer was $answer';
                     correctNumber += 1;
-                    isAnswer1Pressed = false;
-                    isAnswer2Pressed = false;
-                    isAnswer3Pressed = false;
-                    isAnswer4Pressed = false;
                   },
                 );
               } else if (answer == 'Fetching questions...') {
                 setState(
                   () {
                     question = answer;
-                    isAnswer1Pressed = false;
-                    isAnswer2Pressed = false;
-                    isAnswer3Pressed = false;
-                    isAnswer4Pressed = false;
                   },
                 );
               } else {
@@ -267,14 +260,15 @@ class _QuizPageState extends State<QuizPage> {
                     answerColor = Colors.red;
                     question = 'Wrong, the correct answer was $answer';
                     incorrectNumber += 1;
-                    isAnswer1Pressed = false;
-                    isAnswer2Pressed = false;
-                    isAnswer3Pressed = false;
-                    isAnswer4Pressed = false;
                   },
                 );
               }
+              isAnswer1Pressed = false;
+              isAnswer2Pressed = false;
+              isAnswer3Pressed = false;
+              isAnswer4Pressed = false;
               questionNumber += 1;
+              questionNumberDisplayed += 1;
               getQuestion(widget);
             },
           );
@@ -305,9 +299,12 @@ class _QuizPageState extends State<QuizPage> {
           children: <Widget>[
             SizedBox(
               height: size.height * 0.05,
+              child: Center(
+                child: Text('Question $questionNumberDisplayed'),
+              ),
             ),
             SizedBox(
-              height: size.height * 0.40,
+              height: size.height * 0.35,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Neumorph(
