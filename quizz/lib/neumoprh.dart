@@ -42,11 +42,22 @@ class Neumorph extends StatelessWidget {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 text,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: answerColor, fontSize: 20),
+                style: TextStyle(
+                  color: answerColor,
+                  fontSize: 20,
+                  shadows: <Shadow>[
+                    Shadow(
+                      offset: const Offset(5.0, 5.0),
+                      blurRadius: 15.0,
+                      color: Colors.grey.shade400,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

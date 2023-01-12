@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:quizz/neumoprh.dart';
-import 'package:quizz/answerbutton.dart';
 
 void main() => runApp(const Quizzler());
 
@@ -69,13 +68,18 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Neumorph(
-        answerColor: Colors.black,
-        onTap: buttonPressed,
-        isButtonPressed: isButtonPressed,
-        text: 'Start with easy gaming questions',
+    return Center(
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.2,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Neumorph(
+            answerColor: Colors.black,
+            onTap: buttonPressed,
+            isButtonPressed: isButtonPressed,
+            text: 'Start with easy gaming questions',
+          ),
+        ),
       ),
     );
   }
@@ -107,7 +111,8 @@ class _QuizPageState extends State<QuizPage> {
   bool isAnswer3Pressed = false;
   bool isAnswer4Pressed = false;
 
-  //Get 10 new questions via the API call and create a list from them which is used to set the buttons
+  //Get 10 new questions via the API call and create a list from them
+  //This list is used to set the text on the buttons and the question text
   void getQuestion(widget) async {
     if (questionNumber >= 10) {
       final rawData = await http.get(
@@ -190,56 +195,7 @@ class _QuizPageState extends State<QuizPage> {
         });
   }
 
-  //Create the buttons to click when answering the question
-/*
-  Padding createAnswerButton(answerNumber) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Neumorph(
-        answerColor: answerColor,
-        isButtonPressed: isAnswerButtonPressed,
-        text: answerNumber,
-        onTap: () {
-          answerButtonPressed();
-          Timer(
-            const Duration(milliseconds: 300),
-            () {
-              if (answer == answerNumber) {
-                setState(
-                  () {
-                    answerColor = Colors.green;
-                    question = 'Correct, the answer was $answer';
-                    correctNumber += 1;
-                    isAnswerButtonPressed = false;
-                  },
-                );
-              } else if (answer == 'Fetching questions...') {
-                setState(
-                  () {
-                    question = answer;
-                    isAnswerButtonPressed = false;
-                  },
-                );
-              } else {
-                setState(
-                  () {
-                    answerColor = Colors.red;
-                    question = 'Wrong, the correct answer was $answer';
-                    incorrectNumber += 1;
-                    isAnswerButtonPressed = false;
-                  },
-                );
-              }
-              questionNumber += 1;
-              getQuestion(widget);
-            },
-          );
-        },
-      ),
-    );
-  }
-*/
-
+  //Set the clicked button to pressed
   void answerButtonPressed(whichButton) {
     setState(
       () {
@@ -269,12 +225,13 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 
+  //Create the buttons to click when answering the question
   Padding createAnswerButton(
       answerNumber, int whichButton, bool isButtonPressed) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Neumorph(
-        answerColor: answerColor,
+        answerColor: Colors.black,
         isButtonPressed: isButtonPressed,
         text: answerNumber,
         onTap: () {
@@ -349,23 +306,18 @@ class _QuizPageState extends State<QuizPage> {
             SizedBox(
               height: size.height * 0.05,
             ),
-            Text(
-              question,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 30.0,
-                color: Colors.black,
-                shadows: <Shadow>[
-                  Shadow(
-                    offset: const Offset(5.0, 5.0),
-                    blurRadius: 15.0,
-                    color: Colors.grey.shade400,
-                  ),
-                ],
+            SizedBox(
+              height: size.height * 0.40,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Neumorph(
+                    isButtonPressed: false,
+                    text: question,
+                    answerColor: answerColor),
               ),
             ),
             SizedBox(
-              height: size.height * 0.20,
+              height: size.height * 0.05,
             ),
             createAnswerButton(answerOption1, 1, isAnswer1Pressed),
             createAnswerButton(answerOption2, 2, isAnswer2Pressed),
