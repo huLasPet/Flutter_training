@@ -33,6 +33,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isButtonPressed = false;
+  late String difficulty;
+  int topic = 15;
+  bool start = true;
+  var responseDataTopic;
+  List topicList = [];
   void buttonPressed() {
     setState(
       () {
@@ -54,8 +59,9 @@ class _HomePageState extends State<HomePage> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: QuizPage(
-                    difficulty: 'easy',
-                    topic: 15,
+                    difficulty: difficulty,
+                    topic: topic,
+                    start: start,
                   ),
                 ),
               ),
@@ -66,20 +72,69 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void getTopics() async {
+    final rawDataTopic = await http.get(
+      Uri.parse(
+        'https://opentdb.com/api_category.php#',
+      ),
+    );
+    responseDataTopic = json.decode(
+      utf8.decode(rawDataTopic.bodyBytes),
+    );
+    topicList.addAll(responseDataTopic['trivia_categories']);
+  }
+
+  Widget createTopicSelector() {
+    return Text(topicList[0]['name']);
+  }
+
   @override
   Widget build(BuildContext context) {
+    getTopics();
     return Center(
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.2,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Neumorph(
-            answerColor: Colors.black,
-            onTap: buttonPressed,
-            isButtonPressed: isButtonPressed,
-            text: 'Start with easy gaming questions',
+      child: ListView(
+        shrinkWrap: true,
+        children: [
+          createTopicSelector(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
+                onPressed: () {
+                  difficulty = 'easy';
+                },
+                child: const Text('Easy'),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
+                onPressed: () {
+                  difficulty = 'medium';
+                },
+                child: const Text('Medium'),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
+                onPressed: () {
+                  difficulty = 'hard';
+                },
+                child: const Text('Hard'),
+              ),
+            ],
           ),
-        ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.2,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Neumorph(
+                answerColor: Colors.black,
+                onTap: buttonPressed,
+                isButtonPressed: isButtonPressed,
+                text: 'Start',
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -89,13 +144,18 @@ class QuizPage extends StatefulWidget {
   final unescape = HtmlUnescape();
   String difficulty;
   int topic;
-  QuizPage({super.key, required this.difficulty, required this.topic});
+  bool start;
+  QuizPage(
+      {super.key,
+      required this.difficulty,
+      required this.topic,
+      required this.start});
   @override
   _QuizPageState createState() => _QuizPageState();
 }
 
 class _QuizPageState extends State<QuizPage> {
-  String question = 'Tap any of the buttons to start';
+  String question = 'Fetching questions...';
   String answer = 'Fetching questions...';
   Color answerColor = Colors.black;
   String answerOption1 = '-';
@@ -281,6 +341,11 @@ class _QuizPageState extends State<QuizPage> {
   //Display the questions and possible answers
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    if (widget.start == true) {
+      widget.start = false;
+      getQuestion(widget);
+    }
+    ;
     return ListView(
       reverse: true,
       children: <Widget>[
