@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:quizz/neumoprh.dart';
+import 'package:quizz/topics.dart' as topics;
 
 void main() => runApp(const Quizzler());
 
@@ -33,11 +34,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isButtonPressed = false;
-  late String difficulty;
-  int topic = 15;
+  late String difficulty = 'easy';
   bool start = true;
-  var responseDataTopic;
-  List topicList = [];
+  int dropdownValue = 15;
+
   void buttonPressed() {
     setState(
       () {
@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: QuizPage(
                     difficulty: difficulty,
-                    topic: topic,
+                    topic: dropdownValue,
                     start: start,
                   ),
                 ),
@@ -72,30 +72,30 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void getTopics() async {
-    final rawDataTopic = await http.get(
-      Uri.parse(
-        'https://opentdb.com/api_category.php#',
-      ),
-    );
-    responseDataTopic = json.decode(
-      utf8.decode(rawDataTopic.bodyBytes),
-    );
-    topicList.addAll(responseDataTopic['trivia_categories']);
-  }
-
-  Widget createTopicSelector() {
-    return Text(topicList[0]['name']);
-  }
-
   @override
   Widget build(BuildContext context) {
-    getTopics();
     return Center(
       child: ListView(
         shrinkWrap: true,
         children: [
-          createTopicSelector(),
+          Center(
+            child: DropdownButton(
+              style: TextStyle(fontSize: 18, color: Colors.black),
+              alignment: AlignmentDirectional.center,
+              value: dropdownValue,
+              items: topics.list,
+              onChanged: (value) {
+                setState(
+                  () {
+                    dropdownValue = value;
+                  },
+                );
+              },
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.05,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -121,6 +121,9 @@ class _HomePageState extends State<HomePage> {
                 child: const Text('Hard'),
               ),
             ],
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.25,
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.2,
@@ -345,7 +348,7 @@ class _QuizPageState extends State<QuizPage> {
       widget.start = false;
       getQuestion(widget);
     }
-    ;
+
     return ListView(
       reverse: true,
       children: <Widget>[
@@ -392,5 +395,3 @@ class _QuizPageState extends State<QuizPage> {
   }
 }
 //TODO: Difficulty and topic selector at start
-//TODO: Make it look nicer, maybe some
-//TODO: Animations: https://www.youtube.com/watch?v=70UhM3mx4Cw
