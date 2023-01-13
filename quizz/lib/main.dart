@@ -34,6 +34,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isButtonPressed = false;
+  bool isEasyButtonPressed = false;
+  bool isMediumButtonPressed = false;
+  bool isHardButtonPressed = false;
+
   late String difficulty = 'easy';
   bool start = true;
   int dropdownValue = 15;
@@ -74,6 +78,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Center(
       child: ListView(
         shrinkWrap: true,
@@ -94,39 +100,78 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.05,
+            height: MediaQuery.of(context).size.height * 0.10,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
-                onPressed: () {
-                  difficulty = 'easy';
-                },
-                child: const Text('Easy'),
+              SizedBox(
+                width: size.width * 0.3,
+                child: Neumorph(
+                  answerColor: Colors.black,
+                  onTap: () {
+                    setState(
+                      () {
+                        if (isEasyButtonPressed) {
+                          isEasyButtonPressed = false;
+                        } else {
+                          isEasyButtonPressed = true;
+                        }
+                        difficulty = 'easy';
+                      },
+                    );
+                  },
+                  isButtonPressed: isEasyButtonPressed,
+                  text: 'Easy',
+                ),
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
-                onPressed: () {
-                  difficulty = 'medium';
-                },
-                child: const Text('Medium'),
+              SizedBox(
+                width: size.width * 0.3,
+                child: Neumorph(
+                  answerColor: Colors.black,
+                  onTap: () {
+                    setState(
+                      () {
+                        if (isMediumButtonPressed) {
+                          isMediumButtonPressed = false;
+                        } else {
+                          isMediumButtonPressed = true;
+                        }
+                        difficulty = 'medium';
+                      },
+                    );
+                  },
+                  isButtonPressed: isMediumButtonPressed,
+                  text: 'Medium',
+                ),
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
-                onPressed: () {
-                  difficulty = 'hard';
-                },
-                child: const Text('Hard'),
+              SizedBox(
+                width: size.width * 0.3,
+                child: Neumorph(
+                  answerColor: Colors.black,
+                  onTap: () {
+                    setState(
+                      () {
+                        if (isHardButtonPressed) {
+                          isHardButtonPressed = false;
+                        } else {
+                          isHardButtonPressed = true;
+                        }
+                        difficulty = 'hard';
+                      },
+                    );
+                  },
+                  isButtonPressed: isHardButtonPressed,
+                  text: 'Hard',
+                ),
               ),
             ],
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.25,
+            height: size.height * 0.25,
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.2,
+            height: size.height * 0.25,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Neumorph(
@@ -221,6 +266,7 @@ class _QuizPageState extends State<QuizPage> {
                 answerList.removeAt(Random().nextInt(answerList.length)));
             answerOption4 = widget.unescape.convert(
                 answerList.removeAt(Random().nextInt(answerList.length)));
+            questionNumberDisplayed += 1;
           },
         );
       },
@@ -331,7 +377,6 @@ class _QuizPageState extends State<QuizPage> {
               isAnswer3Pressed = false;
               isAnswer4Pressed = false;
               questionNumber += 1;
-              questionNumberDisplayed += 1;
               getQuestion(widget);
             },
           );
