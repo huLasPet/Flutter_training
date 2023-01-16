@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
   bool isMediumButtonPressed = false;
   bool isHardButtonPressed = false;
 
-  late String difficulty = 'easy';
+  late String difficulty = '';
   bool start = true;
   int dropdownValue = 15;
 
@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           Center(
             child: DropdownButton(
-              style: TextStyle(fontSize: 18, color: Colors.black),
+              style: const TextStyle(fontSize: 18, color: Colors.black),
               alignment: AlignmentDirectional.center,
               value: dropdownValue,
               items: topics.list,
@@ -116,6 +116,8 @@ class _HomePageState extends State<HomePage> {
                           isEasyButtonPressed = false;
                         } else {
                           isEasyButtonPressed = true;
+                          isMediumButtonPressed = false;
+                          isHardButtonPressed = false;
                         }
                         difficulty = 'easy';
                       },
@@ -136,6 +138,8 @@ class _HomePageState extends State<HomePage> {
                           isMediumButtonPressed = false;
                         } else {
                           isMediumButtonPressed = true;
+                          isEasyButtonPressed = false;
+                          isHardButtonPressed = false;
                         }
                         difficulty = 'medium';
                       },
@@ -156,6 +160,8 @@ class _HomePageState extends State<HomePage> {
                           isHardButtonPressed = false;
                         } else {
                           isHardButtonPressed = true;
+                          isEasyButtonPressed = false;
+                          isMediumButtonPressed = false;
                         }
                         difficulty = 'hard';
                       },
