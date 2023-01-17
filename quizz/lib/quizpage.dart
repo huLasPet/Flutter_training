@@ -154,6 +154,7 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   //Create the buttons to click when answering the question
+  //Should have used a class here instead and assign that to 4 variables - next time
   Padding createAnswerButton(
       answerNumber, int whichButton, bool isButtonPressed) {
     return Padding(

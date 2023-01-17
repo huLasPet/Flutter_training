@@ -14,7 +14,7 @@ class Quizzler extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.grey.shade300,
-        body: const SafeArea(
+        body: SafeArea(
           child: HomePage(),
         ),
       ),
@@ -23,6 +23,9 @@ class Quizzler extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
+  //Not actually used, just a reminder that it should have been done like this
+  static String difficulty2 = 'Made for TestButton';
+
   const HomePage({super.key});
 
   @override
@@ -39,6 +42,11 @@ class _HomePageState extends State<HomePage> {
   String difficulty = '';
   bool start = true;
   int dropdownValue = 15;
+
+  //Should have done this way from the start, leaving it here as a reminder
+  TestButton easyButton = TestButton(buttonPressed: false, difficulty: 'easy');
+  TestButton mediumButton =
+      TestButton(buttonPressed: false, difficulty: 'medium');
 
   void buttonPressed() {
     //Start button will stay pressed with a restart text
@@ -77,7 +85,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return Center(
       child: ListView(
         shrinkWrap: true,
@@ -179,6 +186,9 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
+          //Not actually used, just a reminder that it should have been done like this
+          easyButton,
+          mediumButton,
           SizedBox(
             height: size.height * 0.25,
           ),
@@ -195,6 +205,43 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class TestButton extends StatefulWidget {
+  late bool buttonPressed;
+  late String difficulty;
+  TestButton(
+      {super.key, required this.buttonPressed, required this.difficulty});
+
+  @override
+  State<TestButton> createState() => _TestButtonState();
+}
+
+class _TestButtonState extends State<TestButton> {
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return SizedBox(
+      width: size.width * 0.3,
+      child: Neumorph(
+        answerColor: Colors.black,
+        onTap: () {
+          setState(
+            () {
+              HomePage.difficulty2 = widget.difficulty;
+              if (widget.buttonPressed == true) {
+                widget.buttonPressed = false;
+              } else {
+                widget.buttonPressed = true;
+              }
+            },
+          );
+        },
+        isButtonPressed: widget.buttonPressed,
+        text: widget.difficulty,
       ),
     );
   }
