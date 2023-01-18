@@ -37,6 +37,8 @@ List<Story> _storyData = [
       path: 0,
       choice1Next: 1,
       choice2Next: 2),
+
+  //Path 1 start
   Story(
       storyTitle:
           'You decide to take the left path, which leads through a dense forest. As you make your way through the trees, you hear a rustling in the bushes. Do you:',
@@ -63,7 +65,7 @@ List<Story> _storyData = [
       choice2Next: 1112),
   Story(
       storyTitle:
-          'As you continue on your journey your hire companions with the found wealth and defeat the sorcerer.',
+          'As you continue on your journey your hire companions with the newfound wealth and defeat the sorcerer.',
       choice1: 'The end',
       choice2: 'Restart',
       path: 1111,
@@ -109,6 +111,50 @@ List<Story> _storyData = [
       path: 122,
       choice1Next: 0,
       choice2Next: 0),
+  //Path 1 end
+  //Path 2 start
+  Story(
+      storyTitle:
+          'You decide to take the right path, which leads through a dark and gloomy swamp. As you make your way through the muck and mire, you come across a mysterious old man. Do you:',
+      choice1: 'Ask the old man for directions',
+      choice2: 'Ignore the old man',
+      path: 2,
+      choice1Next: 21,
+      choice2Next: 22),
+  Story(
+      storyTitle:
+          'The old man tells you that the sorcerer is hiding in a castle deep within the swamp and gives you a magic amulet to protect you from the sorcerer\'s spells. You use the amulet to defeat the sorcerer and save the land.',
+      choice1: 'The end',
+      choice2: 'Restart',
+      path: 21,
+      choice1Next: 0,
+      choice2Next: 0),
+  Story(
+      storyTitle:
+          'As you ignore the old man and continue on your journey, you come across a dragon that is blocking your path. Do you:',
+      choice1: 'Fight the dragon',
+      choice2: 'Attempt to sneak past it',
+      path: 22,
+      choice1Next: 221,
+      choice2Next: 222),
+  Story(
+      storyTitle:
+          'You engage in a fierce battle with the dragon, but ultimately emerge victorious. As you continue on your journey, you find a hidden cave filled with treasure. Do you:',
+      choice1: 'Take the treasure',
+      choice2: 'Leave the treasure',
+      path: 221,
+      //Pointing to the other path since this would be the same ending
+      choice1Next: 1111,
+      choice2Next: 1112),
+  Story(
+      storyTitle:
+          'As you attempt to sneak past the dragon, it suddenly awakens and breathe fire at you. You are killed by dragon.',
+      choice1: 'The end',
+      choice2: 'Restart',
+      path: 222,
+      choice1Next: 0,
+      choice2Next: 0),
+  //Path 2 end
 ];
 
 //TODO: Step 23 - Use the storyNumber property inside getStory(), getChoice1() and getChoice2() so that it gets the updated story and choices rather than always just the first (0th) one.
