@@ -1,3 +1,5 @@
+import 'package:choose_your_own_adventure/glassbox.dart';
+import 'package:choose_your_own_adventure/story_brain.dart';
 import 'package:flutter/material.dart';
 
 //TODO: Step 15 - Run the app and see if you can see the screen update with the first story. Delete this TODO if it looks as you expected.
@@ -10,6 +12,7 @@ class Destini extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
       home: const StoryPage(),
     );
@@ -26,45 +29,65 @@ class StoryPage extends StatefulWidget {
 }
 
 class _StoryPageState extends State<StoryPage> {
+  StoryBrain story = StoryBrain();
+  int storyID = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: const Text(
+          'What will you choose?',
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        toolbarHeight: 30,
+      ),
       body: Container(
-        //TODO: Step 1 - Add background.png to this Container as a background image.
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('images/fork_in_road.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
         padding: const EdgeInsets.symmetric(vertical: 50.0, horizontal: 15.0),
         constraints: const BoxConstraints.expand(),
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              const Expanded(
+              Expanded(
                 flex: 12,
                 child: Center(
-                  child: Text(
-                    //TODO: Step 10 - use the storyBrain to get the first story title and display it in this Text Widget.
-                    'Story text will go here.',
-                    style: TextStyle(
-                      fontSize: 25.0,
-                    ),
+                  child: GlassBox(
+                    text: story.getStory(pathID: storyID),
+                    colorToUse: Colors.white.withOpacity(0.2),
+                    gradientToUse: [
+                      Colors.white.withOpacity(0.5),
+                      Colors.white.withOpacity(0.1),
+                    ],
                   ),
                 ),
               ),
               Expanded(
-                flex: 2,
-                child: TextButton(
-                  onPressed: () {
-                    //Choice 1 made by user.
-                    //TODO: Step 18 - Call the nextStory() method from storyBrain and pass the number 1 as the choice made by the user.
+                child: GestureDetector(
+                  //TODO: Step 18 - Call the nextStory() method from storyBrain and pass the number 1 as the choice made by the user.
+                  onTap: () {
+                    setState(
+                      () {
+                        storyID = story.getChoice1Next(pathID: storyID);
+                      },
+                    );
                   },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.red),
-                  ),
-                  child: const Text(
+                  child: GlassBox(
                     //TODO: Step 13 - Use the storyBrain to get the text for choice 1.
-                    'Choice 1',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                    ),
+                    text: story.getChoice1(pathID: storyID),
+                    colorToUse: Colors.white.withOpacity(0.2),
+                    gradientToUse: [
+                      Colors.white.withOpacity(0.5),
+                      Colors.white.withOpacity(0.1),
+                    ],
                   ),
                 ),
               ),
@@ -72,24 +95,25 @@ class _StoryPageState extends State<StoryPage> {
                 height: 20.0,
               ),
               Expanded(
-                flex: 2,
                 //TODO: Step 26 - Use a Flutter Visibility Widget to wrap this FlatButton.
                 //TODO: Step 28 - Set the "visible" property of the Visibility Widget to equal the output from the buttonShouldBeVisible() method in the storyBrain.
-                child: TextButton(
-                  onPressed: () {
-                    //Choice 2 made by user.
-                    //TODO: Step 19 - Call the nextStory() method from storyBrain and pass the number 2 as the choice made by the user.
+                child: GestureDetector(
+                  //TODO: Step 19 - Call the nextStory() method from storyBrain and pass the number 2 as the choice made by the user.
+                  onTap: () {
+                    setState(
+                      () {
+                        storyID = story.getChoice2Next(pathID: storyID);
+                      },
+                    );
                   },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.blue),
-                  ),
-                  child: const Text(
+                  child: GlassBox(
                     //TODO: Step 14 - Use the storyBrain to get the text for choice 2.
-                    'Choice 2',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.red,
-                    ),
+                    text: story.getChoice2(pathID: storyID),
+                    colorToUse: Colors.white.withOpacity(0.2),
+                    gradientToUse: [
+                      Colors.white.withOpacity(0.5),
+                      Colors.white.withOpacity(0.1),
+                    ],
                   ),
                 ),
               ),

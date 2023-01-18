@@ -1,48 +1,117 @@
-//TODO: Step 6 - import the story.dart file into this file.
+import 'package:choose_your_own_adventure/story.dart';
 
-//TODO: Step 5 - Create a new class called StoryBrain.
+class StoryBrain {
+  String getStory({pathID}) {
+    var firstStory = _storyData.where((element) => element.path == pathID);
+    return firstStory.first.storyTitle;
+  }
 
-//TODO: Step 7 - Uncomment the lines below to include storyData as a private property in StoryBrain. Hint: You might need to change something in story.dart to make this work.
+  String getChoice1({pathID}) {
+    var firstStory = _storyData.where((element) => element.path == pathID);
+    return firstStory.first.choice1;
+  }
 
-//List<Story> _storyData = [
-//  Story(
-//      storyTitle:
-//      'Your car has blown a tire on a winding road in the middle of nowhere with no cell phone reception. You decide to hitchhike. A rusty pickup truck rumbles to a stop next to you. A man with a wide brimmed hat with soulless eyes opens the passenger door for you and asks: "Need a ride, boy?".',
-//      choice1: 'I\'ll hop in. Thanks for the help!',
-//      choice2: 'Better ask him if he\'s a murderer first.'),
-//  Story(
-//      storyTitle: 'He nods slowly, unphased by the question.',
-//      choice1: 'At least he\'s honest. I\'ll climb in.',
-//      choice2: 'Wait, I know how to change a tire.'),
-//  Story(
-//      storyTitle:
-//      'As you begin to drive, the stranger starts talking about his relationship with his mother. He gets angrier and angrier by the minute. He asks you to open the glovebox. Inside you find a bloody knife, two severed fingers, and a cassette tape of Elton John. He reaches for the glove box.',
-//      choice1: 'I love Elton John! Hand him the cassette tape.',
-//      choice2: 'It\'s him or me! You take the knife and stab him.'),
-//  Story(
-//      storyTitle:
-//      'What? Such a cop out! Did you know traffic accidents are the second leading cause of accidental death for most adult age groups?',
-//      choice1: 'Restart',
-//      choice2: ''),
-//  Story(
-//      storyTitle:
-//      'As you smash through the guardrail and careen towards the jagged rocks below you reflect on the dubious wisdom of stabbing someone while they are driving a car you are in.',
-//      choice1: 'Restart',
-//      choice2: ''),
-//  Story(
-//      storyTitle:
-//      'You bond with the murderer while crooning verses of "Can you feel the love tonight". He drops you off at the next town. Before you go he asks you if you know any good places to dump bodies. You reply: "Try the pier".',
-//      choice1: 'Restart',
-//      choice2: '')
-//];
+  int getChoice1Next({pathID}) {
+    var firstStory = _storyData.where((element) => element.path == pathID);
+    return firstStory.first.choice1Next;
+  }
+
+  int getChoice2Next({pathID}) {
+    var firstStory = _storyData.where((element) => element.path == pathID);
+    return firstStory.first.choice2Next;
+  }
+
+  String getChoice2({pathID}) {
+    var firstStory = _storyData.where((element) => element.path == pathID);
+    return firstStory.first.choice2;
+  }
+}
+
+//TODO: Add appBar text and picture path to the Story object as well
+List<Story> _storyData = [
+  Story(
+      storyTitle:
+          'You are a brave adventurer, embarking on a journey to defeat an evil sorcerer who has been terrorizing the land. As you set out on your quest, you come across a fork in the road.',
+      choice1: 'Go left.',
+      choice2: 'Go right',
+      path: 0,
+      choice1Next: 1,
+      choice2Next: 2),
+  Story(
+      storyTitle:
+          'You decide to take the left path, which leads through a dense forest. As you make your way through the trees, you hear a rustling in the bushes. Do you:',
+      choice1: 'Draw your sword',
+      choice2: 'Quietly sneak away',
+      path: 1,
+      choice1Next: 11,
+      choice2Next: 12),
+  Story(
+      storyTitle:
+          'As you draw your sword, a group of bandits jumps out from the bushes, demanding that you hand over all of your possessions. Do you:',
+      choice1: 'Fight the bandits',
+      choice2: 'Give them what they want',
+      path: 11,
+      choice1Next: 111,
+      choice2Next: 112),
+  Story(
+      storyTitle:
+          'You engage in a fierce battle with the bandits, but ultimately emerge victorious. As you continue on your journey, you find a chest filled with gold and precious jewels. Do you:',
+      choice1: 'Take the treasure',
+      choice2: 'Leave the treasure',
+      path: 111,
+      choice1Next: 1111,
+      choice2Next: 1112),
+  Story(
+      storyTitle:
+          'As you continue on your journey your hire companions with the found wealth and defeat the sorcerer.',
+      choice1: 'The end',
+      choice2: 'Restart',
+      path: 1111,
+      choice1Next: 0,
+      choice2Next: 0),
+  Story(
+      storyTitle:
+          'As you continue on your journey you are unable to bolster the strength of your group and get defeated by the sorcerer.',
+      choice1: 'The end',
+      choice2: 'Restart',
+      path: 1112,
+      choice1Next: 0,
+      choice2Next: 0),
+  Story(
+      storyTitle:
+          'The bandits take your possessions and leave you for dead. With nothing left to lose, you continue on your journey with a newfound determination to defeat the sorcerer and reclaim what is rightfully yours.',
+      choice1: 'The end',
+      choice2: 'Restart',
+      path: 112,
+      choice1Next: 0,
+      choice2Next: 0),
+  Story(
+      storyTitle:
+          'You quietly sneak away and avoid the bandits. As you continue on your journey, you come across a clearing where you see a magical horse grazing. Do you:',
+      choice1: 'Try to steal the horse',
+      choice2: 'Ask if it will help you',
+      path: 12,
+      choice1Next: 121,
+      choice2Next: 122),
+  Story(
+      storyTitle:
+          'As you try to steal the horse, it suddenly turns and rears up, revealing itself to be a powerful unicorn. The unicorn uses its magic to transport you to a hidden temple where you find a powerful magic sword. You use the sword to defeat the sorcerer and save the land.',
+      choice1: 'The end',
+      choice2: 'Restart',
+      path: 121,
+      choice1Next: 0,
+      choice2Next: 0),
+  Story(
+      storyTitle:
+          'The horse, sensing your noble intentions, agrees to take you on your journey. Together, you defeat the sorcerer and save the land.',
+      choice1: 'The end',
+      choice2: 'Restart',
+      path: 122,
+      choice1Next: 0,
+      choice2Next: 0),
+];
 
 //TODO: Step 23 - Use the storyNumber property inside getStory(), getChoice1() and getChoice2() so that it gets the updated story and choices rather than always just the first (0th) one.
-
-//TODO: Step 8 - Create a method called getStory() that returns the first storyTitle from _storyData.
-
-//TODO: Step 11 - Create a method called getChoice1() that returns the text for the first choice1 from _storyData.
-
-//TODO: Step 12 - Create a method called getChoice2() that returns the text for the first choice2 from _storyData.
 
 //TODO: Step 25 - Change the storyNumber property into a private property so that only story_brain.dart has access to it. You can do this by right clicking on the name (storyNumber) and selecting Refactor -> Rename to make the change across all the places where it's used.
 
