@@ -25,6 +25,11 @@ class StoryBrain {
     var firstStory = _storyData.where((element) => element.path == pathID);
     return firstStory.first.choice2;
   }
+
+  String getBackground({pathID}) {
+    var firstStory = _storyData.where((element) => element.path == pathID);
+    return firstStory.first.background;
+  }
 }
 
 //TODO: Add appBar text and picture path to the Story object as well
@@ -46,7 +51,8 @@ List<Story> _storyData = [
       choice2: 'Quietly sneak away',
       path: 1,
       choice1Next: 11,
-      choice2Next: 12),
+      choice2Next: 12,
+      background: 'images/forest.png'),
   Story(
       storyTitle:
           'As you draw your sword, a group of bandits jumps out from the bushes, demanding that you hand over all of your possessions. Do you:',

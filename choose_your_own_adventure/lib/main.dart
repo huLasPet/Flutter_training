@@ -41,9 +41,9 @@ class _StoryPageState extends State<StoryPage> {
         toolbarHeight: 30,
       ),
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('images/fork_in_road.png'),
+            image: AssetImage(story.getBackground(pathID: storyID)),
             fit: BoxFit.cover,
           ),
         ),
