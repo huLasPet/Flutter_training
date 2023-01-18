@@ -46,7 +46,6 @@ class GlassBox extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      //TODO: Step 10 - use the storyBrain to get the first story title and display it in this Text Widget.
                       text,
                       style: const TextStyle(
                         fontSize: 20.0,

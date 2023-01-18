@@ -14,3 +14,5 @@ class Story {
       required this.choice1Next,
       required this.choice2Next});
 }
+//TODO: Add background to each object
+//TODO: Add visibility option so when there is an ending the 2nd button is not visible
