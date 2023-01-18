@@ -14,7 +14,7 @@ class Quizzler extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.grey.shade300,
-        body: SafeArea(
+        body: const SafeArea(
           child: HomePage(),
         ),
       ),
@@ -210,6 +210,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+//Should've done the button like this - just an example, not actually used
 class TestButton extends StatefulWidget {
   late bool buttonPressed;
   late String difficulty;
