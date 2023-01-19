@@ -90,7 +90,7 @@ List<Story> _storyData = [
       storyTitle:
           'As you continue on your journey you are unable to bolster the strength of your group and get defeated by the sorcerer.',
       choice1: 'The end',
-      choice2: 'Restart',
+      choice2: '',
       path: 1112,
       choice1Next: 0,
       choice2Next: 0,
@@ -99,7 +99,7 @@ List<Story> _storyData = [
       storyTitle:
           'The bandits take your possessions and leave you for dead. With nothing left to lose, you continue on your journey with a newfound determination to defeat the sorcerer and reclaim what is rightfully yours.',
       choice1: 'The end',
-      choice2: 'Restart',
+      choice2: '',
       path: 112,
       choice1Next: 0,
       choice2Next: 0,
@@ -116,7 +116,7 @@ List<Story> _storyData = [
       storyTitle:
           'As you try to steal the horse, it suddenly turns and rears up, revealing itself to be a powerful unicorn. The unicorn uses its magic to transport you to a hidden temple where you find a powerful magic sword. You use the sword to defeat the sorcerer and save the land.',
       choice1: 'The end',
-      choice2: 'Restart',
+      choice2: '',
       path: 121,
       choice1Next: 0,
       choice2Next: 0,
@@ -125,7 +125,7 @@ List<Story> _storyData = [
       storyTitle:
           'The horse, sensing your noble intentions, agrees to take you on your journey. Together, you defeat the sorcerer and save the land.',
       choice1: 'The end',
-      choice2: 'Restart',
+      choice2: '',
       path: 122,
       choice1Next: 0,
       choice2Next: 0,
@@ -144,7 +144,7 @@ List<Story> _storyData = [
       storyTitle:
           'The old man tells you that the sorcerer is hiding in a castle deep within the swamp and gives you a magic amulet to protect you from the sorcerer\'s spells. You use the amulet to defeat the sorcerer and save the land.',
       choice1: 'The end',
-      choice2: 'Restart',
+      choice2: '',
       path: 21,
       choice1Next: 0,
       choice2Next: 0,
@@ -170,7 +170,7 @@ List<Story> _storyData = [
       storyTitle:
           'As you attempt to sneak past the dragon, it suddenly awakens and breathe fire at you. You are killed by dragon.',
       choice1: 'The end',
-      choice2: 'Restart',
+      choice2: '',
       path: 222,
       choice1Next: 0,
       choice2Next: 0,
