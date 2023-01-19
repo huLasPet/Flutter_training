@@ -48,7 +48,7 @@ class GlassBox extends StatelessWidget {
                     child: Text(
                       text,
                       style: const TextStyle(
-                        fontSize: 20.0,
+                        fontSize: 24.0,
                         color: Colors.black,
                       ),
                     ),

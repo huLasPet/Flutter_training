@@ -6,6 +6,7 @@ class Story {
   int choice2Next;
   int path;
   String background;
+  bool visible;
 
   Story(
       {required this.storyTitle,
@@ -14,7 +15,7 @@ class Story {
       required this.path,
       required this.choice1Next,
       required this.choice2Next,
-      this.background = 'images/fork_in_road.png'});
+      this.background = 'images/fork_in_road.png',
+      this.visible = true});
 }
 //TODO: Add background to each object
-//TODO: Add visibility option so when there is an ending the 2nd button is not visible

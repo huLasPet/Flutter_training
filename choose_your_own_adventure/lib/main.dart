@@ -60,7 +60,7 @@ class _StoryPageState extends State<StoryPage> {
                     text: story.getStory(pathID: storyID),
                     colorToUse: Colors.white.withOpacity(0.2),
                     gradientToUse: [
-                      Colors.white.withOpacity(0.5),
+                      Colors.white.withOpacity(0.3),
                       Colors.white.withOpacity(0.1),
                     ],
                   ),
@@ -88,24 +88,25 @@ class _StoryPageState extends State<StoryPage> {
               const SizedBox(
                 height: 20.0,
               ),
-              Expanded(
-                //TODO: Step 26 - Use a Flutter Visibility Widget to wrap this FlatButton.
-                //TODO: Step 28 - Set the "visible" property of the Visibility Widget to equal the output from the buttonShouldBeVisible() method in the storyBrain.
-                child: GestureDetector(
-                  onTap: () {
-                    setState(
-                      () {
-                        storyID = story.getChoice2Next(pathID: storyID);
-                      },
-                    );
-                  },
-                  child: GlassBox(
-                    text: story.getChoice2(pathID: storyID),
-                    colorToUse: Colors.white.withOpacity(0.2),
-                    gradientToUse: [
-                      Colors.white.withOpacity(0.5),
-                      Colors.white.withOpacity(0.1),
-                    ],
+              Visibility(
+                visible: story.getVisibility(pathID: storyID),
+                child: Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(
+                        () {
+                          storyID = story.getChoice2Next(pathID: storyID);
+                        },
+                      );
+                    },
+                    child: GlassBox(
+                      text: story.getChoice2(pathID: storyID),
+                      colorToUse: Colors.white.withOpacity(0.2),
+                      gradientToUse: [
+                        Colors.white.withOpacity(0.5),
+                        Colors.white.withOpacity(0.1),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -116,5 +117,3 @@ class _StoryPageState extends State<StoryPage> {
     );
   }
 }
-
-//TODO: Step 29 - Run the app and test it against the Story Outline to make sure you've completed all the steps. The code for the completed app can be found here: https://github.com/londonappbrewery/destini-challenge-completed/

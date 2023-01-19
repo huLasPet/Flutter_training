@@ -30,6 +30,11 @@ class StoryBrain {
     var firstStory = _storyData.where((element) => element.path == pathID);
     return firstStory.first.background;
   }
+
+  bool getVisibility({pathID}) {
+    var firstStory = _storyData.where((element) => element.path == pathID);
+    return firstStory.first.visible;
+  }
 }
 
 //TODO: Add appBar text and picture path to the Story object as well
@@ -60,7 +65,8 @@ List<Story> _storyData = [
       choice2: 'Give them what they want',
       path: 11,
       choice1Next: 111,
-      choice2Next: 112),
+      choice2Next: 112,
+      background: 'images/bandit.png'),
   Story(
       storyTitle:
           'You engage in a fierce battle with the bandits, but ultimately emerge victorious. As you continue on your journey, you find a chest filled with gold and precious jewels. Do you:',
@@ -68,15 +74,18 @@ List<Story> _storyData = [
       choice2: 'Leave the treasure',
       path: 111,
       choice1Next: 1111,
-      choice2Next: 1112),
+      choice2Next: 1112,
+      background: 'images/treasure.png'),
   Story(
       storyTitle:
           'As you continue on your journey your hire companions with the newfound wealth and defeat the sorcerer.',
       choice1: 'The end',
-      choice2: 'Restart',
+      choice2: '',
       path: 1111,
       choice1Next: 0,
-      choice2Next: 0),
+      choice2Next: 0,
+      background: 'images/victory.png',
+      visible: false),
   Story(
       storyTitle:
           'As you continue on your journey you are unable to bolster the strength of your group and get defeated by the sorcerer.',
@@ -84,7 +93,8 @@ List<Story> _storyData = [
       choice2: 'Restart',
       path: 1112,
       choice1Next: 0,
-      choice2Next: 0),
+      choice2Next: 0,
+      visible: false),
   Story(
       storyTitle:
           'The bandits take your possessions and leave you for dead. With nothing left to lose, you continue on your journey with a newfound determination to defeat the sorcerer and reclaim what is rightfully yours.',
@@ -92,7 +102,8 @@ List<Story> _storyData = [
       choice2: 'Restart',
       path: 112,
       choice1Next: 0,
-      choice2Next: 0),
+      choice2Next: 0,
+      visible: false),
   Story(
       storyTitle:
           'You quietly sneak away and avoid the bandits. As you continue on your journey, you come across a clearing where you see a magical horse grazing. Do you:',
@@ -108,7 +119,8 @@ List<Story> _storyData = [
       choice2: 'Restart',
       path: 121,
       choice1Next: 0,
-      choice2Next: 0),
+      choice2Next: 0,
+      visible: false),
   Story(
       storyTitle:
           'The horse, sensing your noble intentions, agrees to take you on your journey. Together, you defeat the sorcerer and save the land.',
@@ -116,7 +128,8 @@ List<Story> _storyData = [
       choice2: 'Restart',
       path: 122,
       choice1Next: 0,
-      choice2Next: 0),
+      choice2Next: 0,
+      visible: false),
   //Path 1 end
   //Path 2 start
   Story(
@@ -134,7 +147,8 @@ List<Story> _storyData = [
       choice2: 'Restart',
       path: 21,
       choice1Next: 0,
-      choice2Next: 0),
+      choice2Next: 0,
+      visible: false),
   Story(
       storyTitle:
           'As you ignore the old man and continue on your journey, you come across a dragon that is blocking your path. Do you:',
@@ -159,8 +173,7 @@ List<Story> _storyData = [
       choice2: 'Restart',
       path: 222,
       choice1Next: 0,
-      choice2Next: 0),
+      choice2Next: 0,
+      visible: false),
   //Path 2 end
 ];
-
-//TODO: Step 27 - Create a method called buttonShouldBeVisible() which checks to see if storyNumber is 0 or 1 or 2 (when both buttons should show choices) and return true if that is the case, else it should return false.
