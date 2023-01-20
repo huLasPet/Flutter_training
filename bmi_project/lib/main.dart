@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:bmi_project/input_page.dart';
+import 'package:flutter/services.dart';
 
-void main() => runApp(const BMICalculator());
+void main() {
+  //The part before runApp locks the orientation of the screen
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  runApp(
+    const BMICalculator(),
+  );
+}
 
 class BMICalculator extends StatelessWidget {
   const BMICalculator({super.key});

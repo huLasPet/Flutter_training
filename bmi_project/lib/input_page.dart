@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bmi_project/custom_widgets.dart';
+import 'package:bmi_project/reusable_card.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 const colorOfTheCard = Color(0xFF1D1E33);
@@ -29,29 +29,11 @@ class _InputPageState extends State<InputPage> {
               children: [
                 ReusableCard(
                   cardColor: colorOfTheCard,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
-                      FaIcon(
-                        FontAwesomeIcons.mars,
-                        size: 80,
-                      ),
-                      Text('Male'),
-                    ],
-                  ),
+                  child: cardIcon(FontAwesomeIcons.mars, 'MALE'),
                 ),
                 ReusableCard(
                   cardColor: colorOfTheCard,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
-                      FaIcon(
-                        FontAwesomeIcons.venus,
-                        size: 80,
-                      ),
-                      Text('Female'),
-                    ],
-                  ),
+                  child: cardIcon(FontAwesomeIcons.venus, 'FEMALE'),
                 ),
               ],
             ),
@@ -84,6 +66,22 @@ class _InputPageState extends State<InputPage> {
           )
         ],
       ),
+    );
+  }
+
+  Column cardIcon(IconData iconName, String text) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        FaIcon(
+          iconName,
+          size: 80,
+        ),
+        Text(
+          text,
+          style: const TextStyle(fontSize: 16),
+        ),
+      ],
     );
   }
 }
