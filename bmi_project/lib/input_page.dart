@@ -1,10 +1,8 @@
+import 'package:bmi_project/constants.dart';
 import 'package:bmi_project/reusable_card.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-const activeCardColor = Color(0xFF1D1E33);
-const inactiveCardColor = Color(0xFF111328);
-const bottomContainerColor = Color(0xFFEB1555);
 Color maleCardColor = inactiveCardColor;
 Color femaleCardColor = inactiveCardColor;
 
@@ -18,6 +16,7 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  double _currentValue = 40;
   void changeSelectedCardColor(GenderSelect gender) {
     setState(
       () {
@@ -77,7 +76,42 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: ReusableCard(
                     cardColor: activeCardColor,
-                    onPress: () {},
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('HEIGHT', style: cardFontStyle),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: [
+                            Text(
+                              _currentValue.toStringAsFixed(0),
+                              style: const TextStyle(
+                                  fontSize: 40, fontWeight: FontWeight.bold),
+                            ),
+                            const Text('cm'),
+                          ],
+                        ),
+                        Slider(
+                          value: _currentValue,
+                          min: 40,
+                          max: 250,
+                          activeColor: bottomContainerColor,
+                          onChanged: (value) {
+                            setState(
+                              () {
+                                _currentValue = value.floorToDouble();
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -89,13 +123,19 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: ReusableCard(
                     cardColor: activeCardColor,
-                    onPress: () {},
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [Text('Placeholder for WEIGHT')],
+                    ),
                   ),
                 ),
                 Expanded(
                   child: ReusableCard(
                     cardColor: activeCardColor,
-                    onPress: () {},
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [Text('Placeholder for AGE')],
+                    ),
                   ),
                 ),
               ],
@@ -121,7 +161,7 @@ class _InputPageState extends State<InputPage> {
         ),
         Text(
           text,
-          style: const TextStyle(fontSize: 16),
+          style: cardFontStyle,
         ),
       ],
     );
