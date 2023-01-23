@@ -16,7 +16,7 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-  double _currentValue = 40;
+  double _currentHeight = 40;
   void changeSelectedCardColor(GenderSelect gender) {
     setState(
       () {
@@ -90,25 +90,33 @@ class _InputPageState extends State<InputPage> {
                           textBaseline: TextBaseline.alphabetic,
                           children: [
                             Text(
-                              _currentValue.toStringAsFixed(0),
+                              _currentHeight.toStringAsFixed(0),
                               style: const TextStyle(
                                   fontSize: 40, fontWeight: FontWeight.bold),
                             ),
                             const Text('cm'),
                           ],
                         ),
-                        Slider(
-                          value: _currentValue,
-                          min: 40,
-                          max: 250,
-                          activeColor: bottomContainerColor,
-                          onChanged: (value) {
-                            setState(
-                              () {
-                                _currentValue = value.floorToDouble();
-                              },
-                            );
-                          },
+                        SliderTheme(
+                          data: SliderTheme.of(context).copyWith(
+                            overlayColor: bottomContainerColor.withOpacity(0.5),
+                            thumbColor: bottomContainerColor,
+                            activeTrackColor: Colors.white,
+                            thumbShape: const RoundSliderThumbShape(
+                                enabledThumbRadius: 12),
+                          ),
+                          child: Slider(
+                            value: _currentHeight,
+                            min: 40,
+                            max: 250,
+                            onChanged: (value) {
+                              setState(
+                                () {
+                                  _currentHeight = value.floorToDouble();
+                                },
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),
