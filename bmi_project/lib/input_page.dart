@@ -1,9 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:bmi_project/reusable_card.dart';
+import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-const colorOfTheCard = Color(0xFF1D1E33);
+const activeCardColor = Color(0xFF1D1E33);
+const inactiveCardColor = Color(0xFF111328);
 const bottomContainerColor = Color(0xFFEB1555);
+Color maleCardColor = inactiveCardColor;
+Color femaleCardColor = inactiveCardColor;
+
+enum GenderSelect { male, female }
 
 class InputPage extends StatefulWidget {
   const InputPage({super.key});
@@ -13,6 +18,23 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  void changeSelectedCardColor(GenderSelect gender) {
+    setState(
+      () {
+        switch (gender) {
+          case GenderSelect.male:
+            maleCardColor = activeCardColor;
+            femaleCardColor = inactiveCardColor;
+            break;
+          case GenderSelect.female:
+            femaleCardColor = activeCardColor;
+            maleCardColor = inactiveCardColor;
+            break;
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size cardSize = MediaQuery.of(context).size;
@@ -26,35 +48,55 @@ class _InputPageState extends State<InputPage> {
         children: [
           Expanded(
             child: Row(
+              mainAxisSize: MainAxisSize.max,
               children: [
-                ReusableCard(
-                  cardColor: colorOfTheCard,
-                  child: cardIcon(FontAwesomeIcons.mars, 'MALE'),
+                Expanded(
+                  child: ReusableCard(
+                    cardColor: maleCardColor,
+                    child: cardIcon(FontAwesomeIcons.mars, 'MALE'),
+                    onPress: () {
+                      changeSelectedCardColor(GenderSelect.male);
+                    },
+                  ),
                 ),
-                ReusableCard(
-                  cardColor: colorOfTheCard,
-                  child: cardIcon(FontAwesomeIcons.venus, 'FEMALE'),
+                Expanded(
+                  child: ReusableCard(
+                    cardColor: femaleCardColor,
+                    child: cardIcon(FontAwesomeIcons.venus, 'FEMALE'),
+                    onPress: () {
+                      changeSelectedCardColor(GenderSelect.female);
+                    },
+                  ),
                 ),
               ],
             ),
           ),
           Expanded(
             child: Row(
-              children: const [
-                ReusableCard(
-                  cardColor: colorOfTheCard,
+              children: [
+                Expanded(
+                  child: ReusableCard(
+                    cardColor: activeCardColor,
+                    onPress: () {},
+                  ),
                 ),
               ],
             ),
           ),
           Expanded(
             child: Row(
-              children: const [
-                ReusableCard(
-                  cardColor: colorOfTheCard,
+              children: [
+                Expanded(
+                  child: ReusableCard(
+                    cardColor: activeCardColor,
+                    onPress: () {},
+                  ),
                 ),
-                ReusableCard(
-                  cardColor: colorOfTheCard,
+                Expanded(
+                  child: ReusableCard(
+                    cardColor: activeCardColor,
+                    onPress: () {},
+                  ),
                 ),
               ],
             ),

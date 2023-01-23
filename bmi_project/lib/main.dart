@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:bmi_project/input_page.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  //The part before runApp locks the orientation of the screen
+  //The part before runApp() locks the orientation of the screen
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
