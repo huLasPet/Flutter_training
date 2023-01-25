@@ -29,16 +29,14 @@ class _SecondScreenState extends State<SecondScreen> {
             ),
             BlocConsumer<CounterCubit, CounterState>(
               listener: (context, state) {
-                if (state.wasIncremented == false &&
-                    ModalRoute.of(context)!.isCurrent) {
+                if (state.wasIncremented == false) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Decremented'),
                       duration: Duration(milliseconds: 300),
                     ),
                   );
-                } else if (state.wasIncremented == true &&
-                    ModalRoute.of(context)!.isCurrent) {
+                } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Incremented'),
@@ -78,7 +76,7 @@ class _SecondScreenState extends State<SecondScreen> {
             MaterialButton(
               color: widget.color,
               onPressed: () {
-                Navigator.of(context).pushNamed('/third');
+                Navigator.of(context).pushReplacementNamed('/third');
               },
               child: const Text('Third screen'),
             )
