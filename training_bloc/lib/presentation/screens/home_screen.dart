@@ -16,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    print(ModalRoute.of(context)?.isCurrent);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -29,14 +30,16 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             BlocConsumer<CounterCubit, CounterState>(
               listener: (context, state) {
-                if (state.wasIncremented == false) {
+                if (state.wasIncremented == false &&
+                    ModalRoute.of(context)!.isCurrent) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Decremented'),
                       duration: Duration(milliseconds: 300),
                     ),
                   );
-                } else {
+                } else if (state.wasIncremented == true &&
+                    ModalRoute.of(context)!.isCurrent) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Incremented'),

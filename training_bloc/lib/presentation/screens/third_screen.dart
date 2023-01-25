@@ -29,14 +29,16 @@ class _ThirdScreenState extends State<ThirdScreen> {
             ),
             BlocConsumer<CounterCubit, CounterState>(
               listener: (context, state) {
-                if (state.wasIncremented == false) {
+                if (state.wasIncremented == false &&
+                    ModalRoute.of(context)!.isCurrent) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Decremented'),
                       duration: Duration(milliseconds: 300),
                     ),
                   );
-                } else {
+                } else if (state.wasIncremented == true &&
+                    ModalRoute.of(context)!.isCurrent) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Incremented'),
