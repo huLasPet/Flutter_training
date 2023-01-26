@@ -14,9 +14,11 @@ class ThirdScreen extends StatefulWidget {
 }
 
 class _ThirdScreenState extends State<ThirdScreen> {
+  GlobalKey<ScaffoldState> thirdScreenKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: thirdScreenKey,
       appBar: AppBar(
         title: Text(widget.title),
       ),

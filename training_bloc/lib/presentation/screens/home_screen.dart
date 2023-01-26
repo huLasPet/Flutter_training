@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_bloc/logic/cubit/counter_cubit.dart';
+import 'package:training_bloc/logic/cubit/internet_cubit.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
@@ -14,9 +15,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  GlobalKey<ScaffoldState> homeScreenKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: homeScreenKey,
       appBar: AppBar(
         title: Text(widget.title),
       ),
@@ -24,6 +27,15 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            BlocConsumer<InternetCubit, InternetState>(
+                builder: (newContext, newState) {
+              return Text(
+                newState.toString(),
+                style: Theme.of(context).textTheme.headline4,
+              );
+            }, listener: (newContext, newState) {
+              print(newState);
+            }),
             const Text(
               'You have pushed the button this many times:',
             ),
