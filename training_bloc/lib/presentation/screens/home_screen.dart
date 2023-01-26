@@ -15,80 +15,82 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  dynamic connectionType;
   GlobalKey<ScaffoldState> homeScreenKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: homeScreenKey,
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            BlocConsumer<InternetCubit, InternetState>(
-                builder: (newContext, newState) {
-              return Text(
-                newState.toString(),
-                style: Theme.of(context).textTheme.headline4,
-              );
-            }, listener: (newContext, newState) {
-              print(newState);
-            }),
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            BlocConsumer<CounterCubit, CounterState>(
-              listener: (context, state) {
-                if (state.wasIncremented == false) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Decremented'),
-                      duration: Duration(milliseconds: 300),
-                    ),
-                  );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Incremented'),
-                      duration: Duration(milliseconds: 300),
-                    ),
-                  );
-                }
-              },
-              builder: (context, state) {
-                return Text(
-                  state.counterValue.toString(),
-                  style: Theme.of(context).textTheme.headline4,
-                );
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FloatingActionButton(
-                  heroTag: Text('${widget.title} #1'),
-                  onPressed: () {
-                    BlocProvider.of<CounterCubit>(context).decrement();
+    return BlocListener<InternetCubit, InternetState>(
+      listener: (newcontext, newstate) {
+        connectionType =
+            BlocProvider.of<InternetCubit>(newcontext).connectionType2.name;
+      },
+      child: Scaffold(
+        key: homeScreenKey,
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              BlocConsumer<InternetCubit, InternetState>(
+                  builder: (newContext, newState) {
+                    return Text(connectionType.toString());
                   },
-                  tooltip: 'Decrement',
-                  child: const Icon(Icons.remove),
-                ),
-                FloatingActionButton(
-                  heroTag: Text('${widget.title} #2'),
-                  onPressed: () {
-                    BlocProvider.of<CounterCubit>(context).increment();
-                  },
-                  tooltip: 'Increment',
-                  child: const Icon(Icons.add),
-                ),
-              ],
-            ),
-            MaterialButton(
-              color: widget.color,
-              onPressed: () {
-                Navigator.of(context).pushReplacementNamed('/second');
+                  listener: (newContext, newState) {}),
+              const Text(
+                'You have pushed the button this many times:',
+              ),
+              BlocConsumer<CounterCubit, CounterState>(
+                listener: (context, state) {
+                  if (state.wasIncremented == false) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Decremented'),
+                        duration: Duration(milliseconds: 300),
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Incremented'),
+                        duration: Duration(milliseconds: 300),
+                      ),
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  return Text(
+                    state.counterValue.toString(),
+                    style: Theme.of(context).textTheme.headline4,
+                  );
+                },
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FloatingActionButton(
+                    heroTag: Text('${widget.title} #1'),
+                    onPressed: () {
+                      BlocProvider.of<CounterCubit>(context).decrement();
+                    },
+                    tooltip: 'Decrement',
+                    child: const Icon(Icons.remove),
+                  ),
+                  FloatingActionButton(
+                    heroTag: Text('${widget.title} #2'),
+                    onPressed: () {
+                      BlocProvider.of<CounterCubit>(context).increment();
+                    },
+                    tooltip: 'Increment',
+                    child: const Icon(Icons.add),
+                  ),
+                ],
+              ),
+              MaterialButton(
+                color: widget.color,
+                onPressed: () {
+                  Navigator.of(context).pushReplacementNamed('/second');
 /*
 //Leaving this here as an example
                 Navigator.of(context).push(
@@ -102,10 +104,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 );
 */
-              },
-              child: const Text('Second screen'),
-            )
-          ],
+                },
+                child: const Text('Second screen'),
+              )
+            ],
+          ),
         ),
       ),
     );

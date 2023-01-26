@@ -10,6 +10,7 @@ part 'internet_state.dart';
 class InternetCubit extends Cubit<InternetState> {
   final Connectivity connectivity;
   late StreamSubscription connectivityStreamSubscription;
+  ConnectionType connectionType2 = ConnectionType.mobile;
 
   InternetCubit({required this.connectivity})
       : super(
@@ -23,10 +24,10 @@ class InternetCubit extends Cubit<InternetState> {
         connectivity.onConnectivityChanged.listen(
       (result) {
         if (result == ConnectivityResult.mobile) {
-          print('mobile');
+          connectionType2 = ConnectionType.wifi;
           emitInternetConnected(ConnectionType.mobile);
         } else if (result == ConnectivityResult.wifi) {
-          print('wifi');
+          connectionType2 = ConnectionType.wifi;
           emitInternetConnected(ConnectionType.wifi);
         } else {
           emitInternetDisconnect();
@@ -35,8 +36,10 @@ class InternetCubit extends Cubit<InternetState> {
     );
   }
 
-  void emitInternetConnected(ConnectionType _connectionType) =>
-      emit(InternetConnected(connectionType: _connectionType));
+  void emitInternetConnected(ConnectionType connectionType) =>
+      emit(WifiConnected(connectionType: connectionType));
+
+  void emitMobileConnect() => emit(MobileConnected());
 
   void emitInternetDisconnect() => emit(InternetDisconnected());
 

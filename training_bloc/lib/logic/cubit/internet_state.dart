@@ -5,10 +5,12 @@ abstract class InternetState {}
 
 class InternetLoading extends InternetState {}
 
-class InternetConnected extends InternetState {
+class WifiConnected extends InternetState {
   final ConnectionType connectionType;
 
-  InternetConnected({required this.connectionType});
+  WifiConnected({required this.connectionType});
 }
+
+class MobileConnected extends InternetState {}
 
 class InternetDisconnected extends InternetState {}
