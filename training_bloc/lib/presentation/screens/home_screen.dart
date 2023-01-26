@@ -20,9 +20,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<InternetCubit, InternetState>(
-      listener: (newcontext, newstate) {
+      listener: (newContext, newState) {
         connectionType =
-            BlocProvider.of<InternetCubit>(newcontext).connectionType2.name;
+            BlocProvider.of<InternetCubit>(newContext).connectionType.name;
       },
       child: Scaffold(
         key: homeScreenKey,
