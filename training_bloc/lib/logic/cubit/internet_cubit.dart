@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:meta/meta.dart';
 import 'package:training_bloc/constants/enums.dart';
 
 part 'internet_state.dart';
@@ -10,11 +9,10 @@ part 'internet_state.dart';
 class InternetCubit extends Cubit<InternetState> {
   final Connectivity connectivity;
   late StreamSubscription connectivityStreamSubscription;
-  ConnectionType connectionTypeManual = ConnectionType.mobile;
 
   InternetCubit({required this.connectivity})
       : super(
-          InternetLoading(connectionType: ConnectionType.offline),
+          InternetLoading(connectionType: ConnectionType.loading),
         ) {
     monitorInternetConnection();
   }
@@ -24,13 +22,10 @@ class InternetCubit extends Cubit<InternetState> {
         connectivity.onConnectivityChanged.listen(
       (result) {
         if (result == ConnectivityResult.mobile) {
-          connectionTypeManual = ConnectionType.mobile;
           emitInternetConnected(ConnectionType.mobile);
         } else if (result == ConnectivityResult.wifi) {
-          connectionTypeManual = ConnectionType.wifi;
           emitInternetConnected(ConnectionType.wifi);
         } else {
-          connectionTypeManual = ConnectionType.offline;
           emitInternetDisconnect(ConnectionType.offline);
         }
       },

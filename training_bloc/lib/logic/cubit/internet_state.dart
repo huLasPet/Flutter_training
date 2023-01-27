@@ -1,7 +1,7 @@
 part of 'internet_cubit.dart';
 
 abstract class InternetState {
-  ConnectionType connectionType = ConnectionType.offline;
+  ConnectionType connectionType = ConnectionType.loading;
   InternetState({required this.connectionType});
 }
 

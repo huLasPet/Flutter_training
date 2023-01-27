@@ -15,7 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  dynamic connectionType;
   GlobalKey<ScaffoldState> homeScreenKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -30,7 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             BlocConsumer<InternetCubit, InternetState>(
                 builder: (newContext, newState) {
-                  print(newState.connectionType);
                   return Text(newState.connectionType.name.toString());
                 },
                 listener: (newContext, newState) {}),
