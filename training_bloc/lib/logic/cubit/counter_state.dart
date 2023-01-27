@@ -9,4 +9,27 @@ class CounterState extends Equatable {
   @override
   //Add the fields that are used with Equatable
   List<Object?> get props => [counterValue, wasIncremented];
+
+  //For Hydrated bloc - right click CounterState -> generate -> toMap/fromMap
+  Map<String, dynamic> toMap() {
+    return {
+      'counterValue': counterValue,
+      'wasIncremented': wasIncremented,
+    };
+  }
+
+  factory CounterState.fromMap(Map<String, dynamic> map) {
+    return CounterState(
+      counterValue: map['counterValue'] as int,
+      wasIncremented: map['wasIncremented'] as bool,
+    );
+  }
+
+/*
+  //Can generate up until this point from CounterState - this part was in the tutorial but seems to work without this
+  String toJson() => jsonEncode(toMap());
+  factory CounterState.fromJson(String source) =>
+      CounterState.fromMap(jsonDecode(source));
+
+ */
 }
