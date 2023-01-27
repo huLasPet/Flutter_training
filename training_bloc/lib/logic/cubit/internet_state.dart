@@ -1,16 +1,22 @@
 part of 'internet_cubit.dart';
 
-@immutable
-abstract class InternetState {}
-
-class InternetLoading extends InternetState {}
-
-class WifiConnected extends InternetState {
-  final ConnectionType connectionType;
-
-  WifiConnected({required this.connectionType});
+abstract class InternetState {
+  ConnectionType connectionType = ConnectionType.offline;
+  InternetState({required this.connectionType});
 }
 
-class MobileConnected extends InternetState {}
+class InternetLoading extends InternetState {
+  InternetLoading({required super.connectionType});
+}
 
-class InternetDisconnected extends InternetState {}
+class WifiConnected extends InternetState {
+  WifiConnected({required super.connectionType});
+}
+
+class MobileConnected extends InternetState {
+  MobileConnected({required super.connectionType});
+}
+
+class InternetDisconnected extends InternetState {
+  InternetDisconnected({required super.connectionType});
+}

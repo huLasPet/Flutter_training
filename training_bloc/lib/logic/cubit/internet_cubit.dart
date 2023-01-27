@@ -10,11 +10,11 @@ part 'internet_state.dart';
 class InternetCubit extends Cubit<InternetState> {
   final Connectivity connectivity;
   late StreamSubscription connectivityStreamSubscription;
-  ConnectionType connectionType = ConnectionType.mobile;
+  ConnectionType connectionTypeManual = ConnectionType.mobile;
 
   InternetCubit({required this.connectivity})
       : super(
-          InternetLoading(),
+          InternetLoading(connectionType: ConnectionType.offline),
         ) {
     monitorInternetConnection();
   }
@@ -24,24 +24,28 @@ class InternetCubit extends Cubit<InternetState> {
         connectivity.onConnectivityChanged.listen(
       (result) {
         if (result == ConnectivityResult.mobile) {
-          connectionType = ConnectionType.mobile;
+          connectionTypeManual = ConnectionType.mobile;
           emitInternetConnected(ConnectionType.mobile);
         } else if (result == ConnectivityResult.wifi) {
-          connectionType = ConnectionType.wifi;
+          connectionTypeManual = ConnectionType.wifi;
           emitInternetConnected(ConnectionType.wifi);
         } else {
-          emitInternetDisconnect();
+          connectionTypeManual = ConnectionType.offline;
+          emitInternetDisconnect(ConnectionType.offline);
         }
       },
     );
   }
 
-  void emitInternetConnected(ConnectionType connectionType) =>
-      emit(WifiConnected(connectionType: connectionType));
+  void emitInternetConnected(ConnectionType connectionType) {
+    emit(WifiConnected(connectionType: connectionType));
+  }
 
-  void emitMobileConnect() => emit(MobileConnected());
+  void emitMobileConnect(connectionType) =>
+      emit(MobileConnected(connectionType: connectionType));
 
-  void emitInternetDisconnect() => emit(InternetDisconnected());
+  void emitInternetDisconnect(connectionType) =>
+      emit(InternetDisconnected(connectionType: connectionType));
 
   @override
   Future<void> close() {
