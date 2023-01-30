@@ -24,6 +24,11 @@ class CounterState extends Equatable {
       wasIncremented: map['wasIncremented'] as bool,
     );
   }
+//Generate this so it's easy to print out the value when using BlocObserver
+  @override
+  String toString() {
+    return 'CounterState{counterValue: $counterValue, wasIncemented: $wasIncremented}';
+  }
 
 /*
   //Can generate up until this point from CounterState - this part was in the tutorial but seems to work without this

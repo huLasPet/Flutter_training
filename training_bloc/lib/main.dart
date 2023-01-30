@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:training_bloc/logic/utility/app_bloc_observer.dart';
 import 'package:training_bloc/presentation/router/app_router.dart';
 
 import 'logic/cubit/counter_cubit.dart';
@@ -12,6 +13,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HydratedBloc.storage = await HydratedStorage.build(
       storageDirectory: await getApplicationDocumentsDirectory());
+
+  Bloc.observer = AppBlocObserver();
 
   runApp(MyApp(
     appRouter: AppRouter(),
