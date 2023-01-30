@@ -1,4 +1,3 @@
-/*
 import 'package:bloc_test/bloc_test.dart';
 import 'package:test/test.dart';
 import 'package:training_bloc/logic/cubit/counter_cubit.dart';
@@ -37,4 +36,3 @@ void main() {
     );
   });
 }
-*/
